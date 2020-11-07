@@ -36,7 +36,7 @@ const ThirdPageStackScreen = () => {
   );
 };
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <BottomTab.Navigator initialRouteName="FirstScreenTab">
@@ -55,4 +55,6 @@ export default function App() {
       </BottomTab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default App;
