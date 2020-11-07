@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import FirstScreen from './screens/FirstScreen';
+import PlantHistoryList from './screens/PlantHistoryList';
 import SecondScreen from './screens/SecondScreen';
 import ThirdScreen from './screens/ThirdScreen';
 
@@ -15,7 +15,10 @@ const ThirdPageStack = createStackNavigator();
 const FirstPageStackScreen = () => {
   return (
     <FirstPageStack.Navigator>
-      <FirstPageStack.Screen name="FirstScreen" component={FirstScreen} />
+      <FirstPageStack.Screen
+        name="PlantHistoryList"
+        component={PlantHistoryList}
+      />
     </FirstPageStack.Navigator>
   );
 };
