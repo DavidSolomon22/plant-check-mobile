@@ -1,12 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
 
 const ThirdScreen = () => {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>ThirdScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {},
+});
 
 export default ThirdScreen;
