@@ -1,28 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import SinglePlant from './components/SinglePlant';
-import Home from './screens/Home';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import FirstScreen from './screens/FirstScreen';
+import SecondScreen from './screens/SecondScreen';
+import ThirdScreen from './screens/ThirdScreen';
+
+const BottomTab = createBottomTabNavigator();
+const FirstPageStack = createStackNavigator();
+const SecondPageStack = createStackNavigator();
+const ThirdPageStack = createStackNavigator();
+
+const FirstPageStackScreen = () => {
+  return (
+    <FirstPageStack.Navigator>
+      <FirstPageStack.Screen name="FirstScreen" component={FirstScreen} />
+    </FirstPageStack.Navigator>
+  );
+};
+
+const SecondPageStackScreen = () => {
+  return (
+    <SecondPageStack.Navigator>
+      <SecondPageStack.Screen name="SecondScreen" component={SecondScreen} />
+    </SecondPageStack.Navigator>
+  );
+};
+
+const ThirdPageStackScreen = () => {
+  return (
+    <ThirdPageStack.Navigator>
+      <ThirdPageStack.Screen name="ThirdScreen" component={ThirdScreen} />
+    </ThirdPageStack.Navigator>
+  );
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      {/* <Home /> */}
-      {/* <Text>PLANT IDENTIFCATION</Text>
-      <Text>HISTORY</Text>
-      <StatusBar style="auto" />
-      <SinglePlant plantName="CACTUS" /> */}
-      {/* <SinglePlant plantName="CACTUS1" />
-      <SinglePlant plantName="CACTUS2" /> */}
-    </View>
+    <NavigationContainer>
+      <BottomTab.Navigator initialRouteName="FirstScreenTab">
+        <BottomTab.Screen
+          name="FirstScreenTab"
+          component={FirstPageStackScreen}
+        />
+        <BottomTab.Screen
+          name="SecondScreenTab"
+          component={SecondPageStackScreen}
+        />
+        <BottomTab.Screen
+          name="ThirdScreenTab"
+          component={ThirdPageStackScreen}
+        />
+      </BottomTab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
