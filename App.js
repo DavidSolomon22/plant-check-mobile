@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import PlantHistoryList from './screens/PlantHistoryList';
+import FirstScreen from './screens/FirstScreen';
 import SecondScreen from './screens/SecondScreen';
 import ThirdScreen from './screens/ThirdScreen';
 import PlantIcon from './components/icons/PlantIcon';
