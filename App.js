@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import FirstScreen from './screens/FirstScreen';
+import PlantHistoryList from './screens/PlantHistoryList';
 import SecondScreen from './screens/SecondScreen';
 import ThirdScreen from './screens/ThirdScreen';
 import PlantIcon from './components/icons/PlantIcon';
@@ -40,7 +40,7 @@ const ThirdPageStackScreen = () => {
   );
 };
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <BottomTab.Navigator
@@ -88,4 +88,6 @@ export default function App() {
       </BottomTab.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default App;

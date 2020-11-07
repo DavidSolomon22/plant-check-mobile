@@ -11,7 +11,7 @@ const SinglePlant = ({ plantName }) => {
       <View style={styles.imageContainer}>
         <Image source={require('../assets/cactus.jpg')} style={styles.image} />
       </View>
-      <View style={styles.textContainer}>
+      <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
         <Text style={styles.date}>17-01-2020</Text>
         <View style={styles.infoContainer}>
@@ -33,19 +33,26 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 30,
+    marginLeft: 90,
+    fontWeight: 'bold',
   },
   date: {
     paddingLeft: 30,
     fontSize: 9,
+    marginLeft: 90,
+    fontWeight: 'bold',
   },
   infoContainer: {
     backgroundColor: 'white',
     borderRadius: 30,
+    marginLeft: 70,
+    marginTop: 50,
   },
   info: {
     marginTop: 10,
     margin: 8,
     fontSize: 11,
+    fontWeight: 'bold',
   },
   textContainer: {
     margin: 10,
