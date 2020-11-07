@@ -7,7 +7,7 @@ import Home from './screens/Home';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Home />
+      {/* <Home /> */}
       {/* <Text>PLANT IDENTIFCATION</Text>
       <Text>HISTORY</Text>
       <StatusBar style="auto" />
