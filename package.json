@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@expo-google-fonts/staatliches": "^0.1.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.10.6",
     "@react-navigation/native": "^5.8.6",

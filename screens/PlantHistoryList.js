@@ -28,28 +28,22 @@ const PLANTS = [
     plantName: 'CACTUS6',
     date: '22-01-2020',
   },
-  {
-    plantName: 'CACTUS7',
-    date: '23-01-2020',
-  },
-  {
-    plantName: 'CACTUS8',
-    date: '23-01-2020',
-  },
 ];
 
 const PlantHistoryList = () => {
   return (
     <SafeAreaView>
-      <View>
-        <Text style={styles.title}>PLANT IDENTIFICATION</Text>
-        <Text style={styles.subTitle}>HISTORY</Text>
-      </View>
       <View style={styles.plant}>
         <FlatList
           data={PLANTS}
           maxToRenderPerBatch={1}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          ListHeaderComponent={
+            <View>
+              <Text style={styles.title}>PLANT IDENTIFICATION</Text>
+              <Text style={styles.subTitle}>HISTORY</Text>
+            </View>
+          }
+          contentContainerStyle={{ paddingBottom: 10 }}
           keyExtractor={(item) => item.plantName}
           renderItem={({ item }) => (
             <SinglePlant plantName={item.plantName} date={item.date} />
@@ -73,7 +67,7 @@ const styles = StyleSheet.create({
     color: '#499D32',
   },
   plant: {
-    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

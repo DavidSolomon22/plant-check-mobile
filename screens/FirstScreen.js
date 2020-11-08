@@ -1,12 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, Image, SafeAreaView } from 'react-native';
 
 const FirstScreen = () => {
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <Text>FirstScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {},
+});
 
 export default FirstScreen;
