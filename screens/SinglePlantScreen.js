@@ -44,6 +44,7 @@ const SinglePlantScreen = () => {
                 <OverviewItem iconName={item} iconStatus="JACEK " />
               )}
               contentContainerStyle={styles.rowIconContainer}
+              scrollEnabled={false}
             />
           </View>
           <View style={styles.rowIconContainer}>
@@ -54,6 +55,7 @@ const SinglePlantScreen = () => {
                 <OverviewItem iconName={item} iconStatus="FILIP" />
               )}
               contentContainerStyle={styles.rowIconContainer}
+              scrollEnabled={false}
             />
           </View>
         </View>
