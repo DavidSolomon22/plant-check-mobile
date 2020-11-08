@@ -9,6 +9,7 @@ import ThirdScreen from './screens/ThirdScreen';
 import PlantIcon from './components/icons/PlantIcon';
 import PlantHistoryIcon from './components/icons/PlantHistoryIcon';
 import ProfileIcon from './components/icons/ProfileIcon';
+import SinglePlantScreen from './screens/SinglePlantScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -27,7 +28,11 @@ const FirstPageStackScreen = () => {
 const SecondPageStackScreen = () => {
   return (
     <SecondPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <SecondPageStack.Screen name="SecondScreen" component={SecondScreen} />
+      {/* <SecondPageStack.Screen name="SecondScreen" component={SecondScreen} /> */}
+      <SecondPageStack.Screen
+        name="SinglePlantScreen"
+        component={SinglePlantScreen}
+      />
     </SecondPageStack.Navigator>
   );
 };
