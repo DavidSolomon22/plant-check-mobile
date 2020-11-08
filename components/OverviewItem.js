@@ -13,7 +13,7 @@ import {
 } from '@expo-google-fonts/staatliches';
 import { AppLoading } from 'expo';
 
-const IconCircle = ({ iconName, iconStatus }) => {
+const OverviewItem = ({ iconName, iconStatus }) => {
   let [fontsLoaded, error] = useFonts({
     Staatliches: require('../assets/fonts/Staatliches-Regular.ttf'),
   });
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   iconStatusText: { fontFamily: 'Staatliches', fontSize: 19 },
 });
 
-export default IconCircle;
+export default OverviewItem;

@@ -15,7 +15,7 @@ import {
   Staatliches_400Regular,
 } from '@expo-google-fonts/staatliches';
 import { AppLoading } from 'expo';
-import IconCircle from '../components/IconCircle';
+import OverviewItem from '../components/OverviewItem';
 import style from '../styles/style';
 import { ICON_NAMES } from '../components/constants';
 
@@ -54,7 +54,7 @@ const SinglePlantScreen = () => {
               data={[ICON_NAMES.SUN, ICON_NAMES.RAIN_DROP]}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
-                <IconCircle iconName={item} iconStatus="JACEK " />
+                <OverviewItem iconName={item} iconStatus="JACEK " />
               )}
               contentContainerStyle={styles.rowIconContainer}
             />
@@ -64,7 +64,7 @@ const SinglePlantScreen = () => {
               data={[ICON_NAMES.POT, ICON_NAMES.FERTALIZER]}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
-                <IconCircle iconName={item} iconStatus="FILIP" />
+                <OverviewItem iconName={item} iconStatus="FILIP" />
               )}
               contentContainerStyle={styles.rowIconContainer}
             />
