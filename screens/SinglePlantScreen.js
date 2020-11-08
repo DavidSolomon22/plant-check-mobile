@@ -51,18 +51,21 @@ const SinglePlantScreen = () => {
         <View style={styles.iconsContainer}>
           <View style={styles.rowIconContainer}>
             <FlatList
-              data={[ICON_NAMES.FERTALIZER, ICON_NAMES.POT]}
+              data={[ICON_NAMES.SUN, ICON_NAMES.RAIN_DROP]}
               keyExtractor={(item) => item}
-              renderItem={({ item }) => <IconCircle iconName={item} />}
+              renderItem={({ item }) => (
+                <IconCircle iconName={item} iconStatus="JACEK " />
+              )}
               contentContainerStyle={styles.rowIconContainer}
-              style={styles.circle}
             />
           </View>
           <View style={styles.rowIconContainer}>
             <FlatList
-              data={[ICON_NAMES.RAIN_DROP, ICON_NAMES.SUN]}
+              data={[ICON_NAMES.POT, ICON_NAMES.FERTALIZER]}
               keyExtractor={(item) => item}
-              renderItem={({ item }) => <IconCircle iconName={item} />}
+              renderItem={({ item }) => (
+                <IconCircle iconName={item} iconStatus="FILIP" />
+              )}
               contentContainerStyle={styles.rowIconContainer}
             />
           </View>
@@ -146,11 +149,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  circle: {
-    // height: '150%',
-    // width: '30%',
+    justifyContent: 'center',
+    marginLeft: 10,
   },
 });
 

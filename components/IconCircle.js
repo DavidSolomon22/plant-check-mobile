@@ -7,22 +7,45 @@ import RainDropIcon from './icons/RainDropIcon';
 import SunIcon from './icons/SunIcon';
 import FertalizerIcon from './icons/FertalizerIcon';
 import { ICON_NAMES } from './constants';
+import {
+  useFonts,
+  Staatliches_400Regular,
+} from '@expo-google-fonts/staatliches';
+import { AppLoading } from 'expo';
 
-const IconCirce = ({ iconName }) => {
+const IconCircle = ({ iconName, iconStatus }) => {
+  let [fontsLoaded, error] = useFonts({
+    Staatliches: require('../assets/fonts/Staatliches-Regular.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
-    <View style={styles.circles}>
-      {(iconName === ICON_NAMES.FERTALIZER && <FertalizerIcon />) ||
-        (iconName === ICON_NAMES.RAIN_DROP && <RainDropIcon />) ||
-        (iconName === ICON_NAMES.POT && (
-          <PotIcon style={styles.potIconPosition} />
-        )) ||
-        (iconName === ICON_NAMES.SUN && <SunIcon />)}
+    <View style={styles.container}>
+      <View style={styles.circle}>
+        {(iconName === ICON_NAMES.FERTALIZER && <FertalizerIcon />) ||
+          (iconName === ICON_NAMES.RAIN_DROP && <RainDropIcon />) ||
+          (iconName === ICON_NAMES.POT && (
+            <PotIcon style={styles.potIconPosition} />
+          )) ||
+          (iconName === ICON_NAMES.SUN && <SunIcon />)}
+      </View>
+      <Text style={styles.iconStatusText}>{iconStatus}</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  circles: {
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: 170,
+    paddingRight: 10,
+    marginRight: 10,
+  },
+  circle: {
     width: 60,
     height: 60,
     borderRadius: 30,
@@ -34,8 +57,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 1,
     elevation: 3,
+    marginRight: 10,
   },
   potIconPosition: { position: 'relative', left: -2 },
+  iconStatusText: { fontFamily: 'Staatliches', fontSize: 19 },
 });
 
-export default IconCirce;
+export default IconCircle;
