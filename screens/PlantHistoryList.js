@@ -9,7 +9,7 @@ const PLANTS = [
     date: '17-01-2020',
   },
   {
-    plantName: 'CACTUS2',
+    plantName: 'CACTUS232323',
     date: '18-01-2020',
   },
   {
@@ -28,6 +28,10 @@ const PLANTS = [
     plantName: 'CACTUS6',
     date: '22-01-2020',
   },
+  {
+    plantName: 'CACTUS7',
+    date: '22-01-2020',
+  },
 ];
 
 const PlantHistoryList = () => {
@@ -36,14 +40,13 @@ const PlantHistoryList = () => {
       <View style={styles.plant}>
         <FlatList
           data={PLANTS}
-          maxToRenderPerBatch={1}
           ListHeaderComponent={
             <View>
               <Text style={styles.title}>PLANT IDENTIFICATION</Text>
               <Text style={styles.subTitle}>HISTORY</Text>
             </View>
           }
-          contentContainerStyle={{ paddingBottom: 10 }}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item.plantName}
           renderItem={({ item }) => (
             <SinglePlant plantName={item.plantName} date={item.date} />
