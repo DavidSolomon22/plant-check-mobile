@@ -12,25 +12,24 @@ import PlantHistoryList from './screens/PlantHistoryList';
 
 const BottomTab = createBottomTabNavigator();
 
-const FirstPageStack = createStackNavigator();
+const PlantHistoryListStack = createStackNavigator();
 const SecondPageStack = createStackNavigator();
 const ThirdPageStack = createStackNavigator();
 
-const FirstPageStackScreen = () => {
+const PlantHistoryListStackScreen = () => {
   return (
-    <FirstPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <FirstPageStack.Screen
+    <PlantHistoryListStack.Navigator screenOptions={{ headerShown: false }}>
+      <PlantHistoryListStack.Screen
         name="PlantHistoryList"
         component={PlantHistoryList}
       />
-    </FirstPageStack.Navigator>
+    </PlantHistoryListStack.Navigator>
   );
 };
 
 const SecondPageStackScreen = () => {
   return (
     <SecondPageStack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <SecondPageStack.Screen name="SecondScreen" component={SecondScreen} /> */}
       <SecondPageStack.Screen
         name="SinglePlantScreen"
         component={SinglePlantScreen}
@@ -57,12 +56,11 @@ const App = () => {
   return (
     <NavigationContainer>
       <BottomTab.Navigator
-        initialRouteName="FirstScreenTab"
+        initialRouteName="PlantHistoryListStackTab"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let tabIcon;
-            // #000
-            if (route.name === 'FirstScreenTab') {
+            if (route.name === 'PlantHistoryListStackTab') {
               tabIcon = focused ? (
                 <PlantHistoryIcon color="#499D32" />
               ) : (
@@ -87,8 +85,8 @@ const App = () => {
         tabBarOptions={{ showLabel: false }}
       >
         <BottomTab.Screen
-          name="FirstScreenTab"
-          component={FirstPageStackScreen}
+          name="PlantHistoryListStackTab"
+          component={PlantHistoryListStackScreen}
         />
         <BottomTab.Screen
           name="SecondScreenTab"

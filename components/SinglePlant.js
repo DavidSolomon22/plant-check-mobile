@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import stylesGlobal from '../styles/style';
+import SinglePlantScreen from '../screens/SinglePlantScreen';
 
 const SinglePlant = ({ plantName, date }) => {
   const boxColor = {
@@ -14,9 +15,9 @@ const SinglePlant = ({ plantName, date }) => {
       <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
         <Text style={styles.date}>{date}</Text>
-        <View style={styles.infoContainer}>
+        <TouchableOpacity style={styles.infoContainer}>
           <Text style={styles.info}>ADD TO YOUR PLANT'S HOME</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

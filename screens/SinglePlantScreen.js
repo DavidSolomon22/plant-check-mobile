@@ -24,7 +24,11 @@ const SinglePlantScreen = () => {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={require('../assets/images/cactus.jpg')}
+              // source={require('../assets/images/cactus.jpg')}
+              source={{
+                uri:
+                  'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
+              }}
             />
           </View>
           <View style={styles.detailsTextContainer}>
