@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import PlantHistoryList from './screens/PlantHistoryList';
 import SecondScreen from './screens/SecondScreen';
 import ThirdScreen from './screens/ThirdScreen';
+import { useFonts } from '@use-expo/font';
 
 const BottomTab = createBottomTabNavigator();
 const FirstPageStack = createStackNavigator();
@@ -40,6 +41,12 @@ const ThirdPageStackScreen = () => {
 };
 
 const App = () => {
+  const [loaded] = useFonts({
+    Staatliches: require('./assets/fonts/Staatliches.ttf'),
+  });
+  if (!loaded) {
+    return null;
+  }
   return (
     <NavigationContainer>
       <BottomTab.Navigator initialRouteName="FirstScreenTab">
