@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import stylesGlobal from '../styles/style';
 
-const SinglePlant = ({ plantName }) => {
+const SinglePlant = ({ plantName, date }) => {
   const boxColor = {
     backgroundColor: '#499D32',
   };
@@ -13,7 +13,7 @@ const SinglePlant = ({ plantName }) => {
       </View>
       <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
-        <Text style={styles.date}>17-01-2020</Text>
+        <Text style={styles.date}>{date}</Text>
         <View style={styles.infoContainer}>
           <Text style={styles.info}>ADD TO YOUR PLANT'S HOME</Text>
         </View>
@@ -29,44 +29,62 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     margin: 10,
     flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
   },
   text: {
     color: 'white',
-    fontSize: 30,
-    marginLeft: 90,
+    fontSize: 35,
+    marginLeft: 110,
     fontWeight: 'bold',
   },
   date: {
     paddingLeft: 30,
-    fontSize: 9,
-    marginLeft: 90,
+    fontSize: 11,
+    marginLeft: 100,
     fontWeight: 'bold',
+    fontFamily: 'Staatliches',
   },
   infoContainer: {
     backgroundColor: 'white',
     borderRadius: 30,
     marginLeft: 70,
-    marginTop: 50,
+    marginTop: 40,
+    width: 200,
+    height: 30,
   },
   info: {
-    marginTop: 10,
-    margin: 8,
-    fontSize: 11,
+    marginTop: 7,
+    fontSize: 15,
     fontWeight: 'bold',
+    fontFamily: 'Staatliches',
+    textAlign: 'center',
   },
   textContainer: {
     margin: 10,
-    paddingLeft: 50,
+    paddingLeft: 60,
   },
   imageContainer: {
-    marginLeft: 8,
-    height: 180,
+    marginLeft: 9,
+    height: 160,
     width: 50,
     borderRadius: 30,
-    marginTop: 5,
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
   },
   image: {
-    height: 170,
+    height: 160,
     width: 100,
     borderRadius: 30,
     overflow: 'hidden',

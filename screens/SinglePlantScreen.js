@@ -10,24 +10,11 @@ import {
 } from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
-import {
-  useFonts,
-  Staatliches_400Regular,
-} from '@expo-google-fonts/staatliches';
-import { AppLoading } from 'expo';
 import OverviewItem from '../components/OverviewItem';
 import style from '../styles/style';
 import { ICON_NAMES } from '../components/constants';
 
 const SinglePlantScreen = () => {
-  let [fontsLoaded, error] = useFonts({
-    Staatliches: require('../assets/fonts/Staatliches-Regular.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
-
   return (
     <SafeAreaView style={[styles.container, stylesGlobal.androidSafeArea]}>
       <StatusBar backgroundColor={Colors.green} />
@@ -57,6 +44,7 @@ const SinglePlantScreen = () => {
                 <OverviewItem iconName={item} iconStatus="JACEK " />
               )}
               contentContainerStyle={styles.rowIconContainer}
+              scrollEnabled={false}
             />
           </View>
           <View style={styles.rowIconContainer}>
@@ -67,6 +55,7 @@ const SinglePlantScreen = () => {
                 <OverviewItem iconName={item} iconStatus="FILIP" />
               )}
               contentContainerStyle={styles.rowIconContainer}
+              scrollEnabled={false}
             />
           </View>
         </View>

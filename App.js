@@ -3,13 +3,13 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import FirstScreen from './screens/FirstScreen';
-import SecondScreen from './screens/SecondScreen';
 import ThirdScreen from './screens/ThirdScreen';
+import { useFonts } from '@expo-google-fonts/staatliches';
 import PlantIcon from './components/icons/PlantIcon';
 import PlantHistoryIcon from './components/icons/PlantHistoryIcon';
 import ProfileIcon from './components/icons/ProfileIcon';
 import SinglePlantScreen from './screens/SinglePlantScreen';
+import PlantHistoryList from './screens/PlantHistoryList';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -20,7 +20,10 @@ const ThirdPageStack = createStackNavigator();
 const FirstPageStackScreen = () => {
   return (
     <FirstPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <FirstPageStack.Screen name="FirstScreen" component={FirstScreen} />
+      <FirstPageStack.Screen
+        name="PlantHistoryList"
+        component={PlantHistoryList}
+      />
     </FirstPageStack.Navigator>
   );
 };
@@ -46,6 +49,12 @@ const ThirdPageStackScreen = () => {
 };
 
 const App = () => {
+  const [loaded] = useFonts({
+    Staatliches: require('./assets/fonts/Staatliches.ttf'),
+  });
+  if (!loaded) {
+    return null;
+  }
   return (
     <NavigationContainer>
       <BottomTab.Navigator

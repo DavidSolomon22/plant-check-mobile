@@ -7,20 +7,8 @@ import RainDropIcon from './icons/RainDropIcon';
 import SunIcon from './icons/SunIcon';
 import FertalizerIcon from './icons/FertalizerIcon';
 import { ICON_NAMES } from './constants';
-import {
-  useFonts,
-  Staatliches_400Regular,
-} from '@expo-google-fonts/staatliches';
-import { AppLoading } from 'expo';
 
 const OverviewItem = ({ iconName, iconStatus }) => {
-  let [fontsLoaded, error] = useFonts({
-    Staatliches: require('../assets/fonts/Staatliches-Regular.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
   return (
     <View style={styles.container}>
       <View style={styles.circle}>
