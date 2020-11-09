@@ -9,10 +9,12 @@ import ProfileIcon from './icons/ProfileIcon';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
 import PlantHistoryList from '../screens/PlantHistoryList';
 import SecondScreen from '../screens/SecondScreen';
+import Home from '../screens/Home';
 
 const BottomTab = createBottomTabNavigator();
 
 const PlantHistoryListStack = createStackNavigator();
+const HomeStack = createStackNavigator();
 const SecondPageStack = createStackNavigator();
 const ThirdPageStack = createStackNavigator();
 
@@ -28,6 +30,14 @@ const PlantHistoryListStackScreen = () => {
         component={SinglePlantScreen}
       />
     </PlantHistoryListStack.Navigator>
+  );
+};
+
+const HomeStackScreen = () => {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Home" component={Home} />
+    </HomeStack.Navigator>
   );
 };
 
@@ -61,7 +71,7 @@ const Navigation = () => {
               ) : (
                 <PlantHistoryIcon color="#000" />
               );
-            } else if (route.name === 'SecondScreenTab') {
+            } else if (route.name === 'HomeStackTab') {
               tabIcon = focused ? (
                 <PlantIcon color="#499D32" />
               ) : (
@@ -83,10 +93,7 @@ const Navigation = () => {
           name="PlantHistoryListStackTab"
           component={PlantHistoryListStackScreen}
         />
-        <BottomTab.Screen
-          name="SecondScreenTab"
-          component={SecondPageStackScreen}
-        />
+        <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
         <BottomTab.Screen
           name="ThirdScreenTab"
           component={ThirdPageStackScreen}

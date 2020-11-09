@@ -5,7 +5,7 @@ import Leaf from '../components/icons/Leaf';
 
 const Home = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <PhotoButton />
       <Text style={styles.text}>PRESS THE BUTTON TO TAKE PHOTO</Text>
       <Leaf style={[styles.leaf, styles.firstLeaf]} />
@@ -21,6 +21,10 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+  },
   text: {
     marginTop: 30,
   },
