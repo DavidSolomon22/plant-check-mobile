@@ -14,20 +14,21 @@ import OverviewItem from '../components/OverviewItem';
 import style from '../styles/style';
 import { ICON_NAMES } from '../components/constants';
 
-const SinglePlantScreen = () => {
+const SinglePlantScreen = ({ route }) => {
+  // const { plantName } = route.params.plantName;
+  // const { photoUrl } = route.params.photoUrl;
+
   return (
     <SafeAreaView style={[styles.container, stylesGlobal.androidSafeArea]}>
       <StatusBar backgroundColor={Colors.green} />
       <View style={styles.greenContainer}>
-        <Text style={styles.textStyle}>CACTUS</Text>
+        <Text style={styles.textStyle}>{route.params.plantName}</Text>
         <View style={styles.photoAndButtonContainer}>
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              // source={require('../assets/images/cactus.jpg')}
               source={{
-                uri:
-                  'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
+                uri: route.params.photoUrl,
               }}
             />
           </View>

@@ -3,19 +3,19 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import stylesGlobal from '../styles/style';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
 
-const SinglePlant = ({ plantName, date }) => {
+const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
   const boxColor = {
     backgroundColor: '#499D32',
   };
   return (
     <View style={[styles.box, boxColor]}>
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/cactus.jpg')} style={styles.image} />
+        <Image source={{ uri: photoUrl }} style={styles.image} />
       </View>
       <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
         <Text style={styles.date}>{date}</Text>
-        <TouchableOpacity style={styles.infoContainer}>
+        <TouchableOpacity style={styles.infoContainer} onPress={handlePress}>
           <Text style={styles.info}>ADD TO YOUR PLANT'S HOME</Text>
         </TouchableOpacity>
       </View>

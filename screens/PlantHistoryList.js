@@ -7,30 +7,42 @@ const PLANTS = [
   {
     plantName: 'CACTUS',
     date: '17-01-2020',
+    photoUrl:
+      'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
     plantName: 'CACTUS2',
     date: '18-01-2020',
+    photoUrl:
+      'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
     plantName: 'CACTUS3',
     date: '19-01-2020',
+    photoUrl:
+      'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
     plantName: 'CACTUS4',
     date: '20-01-2020',
+    photoUrl:
+      'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
     plantName: 'CACTUS5',
     date: '21-01-2020',
+    photoUrl:
+      'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
     plantName: 'CACTUS6',
     date: '22-01-2020',
+    photoUrl:
+      'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
 ];
 
-const PlantHistoryList = () => {
+const PlantHistoryList = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View style={styles.plant}>
@@ -46,7 +58,17 @@ const PlantHistoryList = () => {
           contentContainerStyle={{ paddingBottom: 10 }}
           keyExtractor={(item) => item.plantName}
           renderItem={({ item }) => (
-            <SinglePlant plantName={item.plantName} date={item.date} />
+            <SinglePlant
+              plantName={item.plantName}
+              photoUrl={item.photoUrl}
+              date={item.date}
+              handlePress={() => {
+                navigation.navigate('SinglePlantScreen', {
+                  plantName: item.plantName,
+                  photoUrl: item.photoUrl,
+                });
+              }}
+            />
           )}
         />
       </View>

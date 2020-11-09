@@ -9,6 +9,7 @@ import PlantHistoryIcon from './components/icons/PlantHistoryIcon';
 import ProfileIcon from './components/icons/ProfileIcon';
 import SinglePlantScreen from './screens/SinglePlantScreen';
 import PlantHistoryList from './screens/PlantHistoryList';
+import SecondScreen from './screens/SecondScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -23,6 +24,11 @@ const PlantHistoryListStackScreen = () => {
         name="PlantHistoryList"
         component={PlantHistoryList}
       />
+      <PlantHistoryListStack.Screen
+        screenOptions={{ headerShown: false }}
+        name="SinglePlantScreen"
+        component={SinglePlantScreen}
+      />
     </PlantHistoryListStack.Navigator>
   );
 };
@@ -30,10 +36,7 @@ const PlantHistoryListStackScreen = () => {
 const SecondPageStackScreen = () => {
   return (
     <SecondPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <SecondPageStack.Screen
-        name="SinglePlantScreen"
-        component={SinglePlantScreen}
-      />
+      <SecondPageStack.Screen name="SecondScreen" component={SecondScreen} />
     </SecondPageStack.Navigator>
   );
 };
