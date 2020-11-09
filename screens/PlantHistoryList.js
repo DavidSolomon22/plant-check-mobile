@@ -11,7 +11,7 @@ const PLANTS = [
       'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
-    plantName: 'CACTUS2',
+    plantName: 'CACTUS232323',
     date: '18-01-2020',
     photoUrl:
       'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
@@ -40,6 +40,10 @@ const PLANTS = [
     photoUrl:
       'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
+  {
+    plantName: 'CACTUS7',
+    date: '22-01-2020',
+  },
 ];
 
 const PlantHistoryList = ({ navigation }) => {
@@ -49,14 +53,13 @@ const PlantHistoryList = ({ navigation }) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={PLANTS}
-          maxToRenderPerBatch={1}
           ListHeaderComponent={
             <View>
               <Text style={styles.title}>PLANT IDENTIFICATION</Text>
               <Text style={styles.subTitle}>HISTORY</Text>
             </View>
           }
-          contentContainerStyle={{ paddingBottom: 10 }}
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item.plantName}
           renderItem={({ item }) => (
             <SinglePlant

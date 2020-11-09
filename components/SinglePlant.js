@@ -24,10 +24,8 @@ const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
 
 const styles = StyleSheet.create({
   box: {
-    width: 340,
-    height: 180,
+    flex: 1,
     borderRadius: 30,
-    margin: 10,
     flexDirection: 'row',
     shadowColor: '#000',
     shadowOffset: {
@@ -36,25 +34,42 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.32,
     shadowRadius: 5.46,
+    marginBottom: '15%',
+  },
+  image: {
+    height: 130,
+    width: 100,
+    borderRadius: 30,
+    overflow: 'hidden',
+    resizeMode: 'cover',
+  },
+  imageContainer: {
+    margin: '3%',
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
   },
   text: {
     color: 'white',
     fontSize: 35,
-    marginLeft: 110,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   date: {
-    paddingLeft: 30,
-    fontSize: 11,
-    marginLeft: 100,
+    fontSize: 14,
+    textAlign: 'center',
     fontWeight: 'bold',
     fontFamily: 'Staatliches',
   },
   infoContainer: {
     backgroundColor: 'white',
     borderRadius: 30,
-    marginLeft: 70,
-    marginTop: 40,
+    marginTop: '15%',
     width: 200,
     height: 30,
   },
@@ -68,26 +83,6 @@ const styles = StyleSheet.create({
   textContainer: {
     margin: 10,
     paddingLeft: 60,
-  },
-  imageContainer: {
-    marginLeft: 9,
-    height: 160,
-    width: 50,
-    borderRadius: 30,
-    marginTop: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-  },
-  image: {
-    height: 160,
-    width: 100,
-    borderRadius: 30,
-    overflow: 'hidden',
   },
 });
 export default SinglePlant;
