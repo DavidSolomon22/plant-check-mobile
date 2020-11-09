@@ -5,8 +5,4 @@ export default StyleSheet.create({
     color: 'white',
     fontFamily: 'Staatliches',
   },
-  androidSafeArea: {
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? 22 : 0,
-  },
 });

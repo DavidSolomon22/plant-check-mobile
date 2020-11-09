@@ -1,26 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  Image,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import OverviewItem from '../components/OverviewItem';
 import { ICON_NAMES } from '../components/constants';
 import GoBackIcon from '../components/icons/GoBackIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import StatusBarCustom from '../components/StatusBarCustom';
 
 const SinglePlantScreen = (props) => {
   const { route, navigation } = props;
   return (
-    <SafeAreaView style={[styles.container, stylesGlobal.androidSafeArea]}>
-      <StatusBar backgroundColor={Colors.green} />
-      <View style={styles.greenContainer}>
+    <View style={styles.container}>
+      <StatusBarCustom bgColor={Colors.green} barStyle="light" />
+      <View style={[styles.greenContainer, stylesGlobal.androidSafeArea]}>
         <View style={styles.plantNameAndGoBackArrowContainer}>
           <TouchableOpacity
             onPress={() => {
@@ -75,13 +68,14 @@ const SinglePlantScreen = (props) => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
+    flex: 1,
   },
   greenContainer: {
     flex: 7,
