@@ -22,51 +22,55 @@ const Home = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
+    fontFamily: 'Staatliches',
+    fontSize: 25,
     marginTop: 30,
   },
   leaf: {
     position: 'absolute',
   },
   firstLeaf: {
-    top: -180,
-    left: 50,
+    top: 80,
+    left: 140,
     transform: [{ rotate: '60deg' }],
   },
   secondLeaf: {
-    top: -100,
-    left: 170,
+    top: 160,
+    left: 250,
   },
   thirdLeaf: {
-    top: -50,
-    left: -30,
+    top: 200,
+    left: 60,
   },
   fourthLeaf: {
-    top: 210,
-    left: 250,
+    top: 460,
+    left: 330,
     transform: [{ rotate: '40deg' }],
   },
   fifthLeaf: {
-    top: 350,
-    left: 80,
+    top: 620,
+    left: 170,
     transform: [{ rotate: '10deg' }],
   },
   sixthLeaf: {
-    top: 400,
-    left: -50,
+    top: 680,
+    left: 50,
     transform: [{ rotate: '50deg' }],
   },
   seventhLeaf: {
-    top: 410,
-    left: 210,
+    top: 690,
+    left: 280,
     transform: [{ rotate: '45deg' }],
   },
   eighthLeaf: {
-    top: 480,
-    left: 110,
+    top: 750,
+    left: 200,
     transform: [{ rotate: '-30deg' }],
   },
 });
