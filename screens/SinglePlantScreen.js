@@ -11,13 +11,9 @@ import {
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import OverviewItem from '../components/OverviewItem';
-import style from '../styles/style';
 import { ICON_NAMES } from '../components/constants';
 
 const SinglePlantScreen = ({ route }) => {
-  // const { plantName } = route.params.plantName;
-  // const { photoUrl } = route.params.photoUrl;
-
   return (
     <SafeAreaView style={[styles.container, stylesGlobal.androidSafeArea]}>
       <StatusBar backgroundColor={Colors.green} />

@@ -47,6 +47,7 @@ const PlantHistoryList = ({ navigation }) => {
     <SafeAreaView>
       <View style={styles.plant}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={PLANTS}
           maxToRenderPerBatch={1}
           ListHeaderComponent={
