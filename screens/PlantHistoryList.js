@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import SinglePlant from '../components/SinglePlant';
+import globalStyles from '../styles/style';
 
 const PLANTS = [
   {
@@ -48,34 +49,31 @@ const PLANTS = [
 
 const PlantHistoryList = ({ navigation }) => {
   return (
-    <SafeAreaView>
-      <View style={styles.plant}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={PLANTS}
-          ListHeaderComponent={
-            <View>
-              <Text style={styles.title}>PLANT IDENTIFICATION</Text>
-              <Text style={styles.subTitle}>HISTORY</Text>
-            </View>
-          }
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item.plantName}
-          renderItem={({ item }) => (
-            <SinglePlant
-              plantName={item.plantName}
-              photoUrl={item.photoUrl}
-              date={item.date}
-              handlePress={() => {
-                navigation.navigate('SinglePlantScreen', {
-                  plantName: item.plantName,
-                  photoUrl: item.photoUrl,
-                });
-              }}
-            />
-          )}
-        />
-      </View>
+    <SafeAreaView style={[globalStyles.androidSafeArea, styles.plant]}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={PLANTS}
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.title}>PLANT IDENTIFICATION</Text>
+            <Text style={styles.subTitle}>HISTORY</Text>
+          </View>
+        }
+        keyExtractor={(item) => item.plantName}
+        renderItem={({ item }) => (
+          <SinglePlant
+            plantName={item.plantName}
+            photoUrl={item.photoUrl}
+            date={item.date}
+            handlePress={() => {
+              navigation.navigate('SinglePlantScreen', {
+                plantName: item.plantName,
+                photoUrl: item.photoUrl,
+              });
+            }}
+          />
+        )}
+      />
     </SafeAreaView>
   );
 };
