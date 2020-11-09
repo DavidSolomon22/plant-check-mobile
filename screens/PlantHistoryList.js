@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import SinglePlant from '../components/SinglePlant';
 import globalStyles from '../styles/style';
+import StatusBarCustom from '../components/StatusBarCustom';
+import { Colors } from '../styles';
 
 const PLANTS = [
   {
@@ -12,7 +13,7 @@ const PLANTS = [
       'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
   },
   {
-    plantName: 'CACTUS232323',
+    plantName: 'CACTUS2',
     date: '18-01-2020',
     photoUrl:
       'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
@@ -49,7 +50,8 @@ const PLANTS = [
 
 const PlantHistoryList = ({ navigation }) => {
   return (
-    <SafeAreaView style={[globalStyles.androidSafeArea, styles.plant]}>
+    <View style={[globalStyles.androidSafeArea, styles.plant]}>
+      <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={PLANTS}
@@ -74,7 +76,7 @@ const PlantHistoryList = ({ navigation }) => {
           />
         )}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -92,6 +94,8 @@ const styles = StyleSheet.create({
   },
   plant: {
     alignItems: 'center',
+    backgroundColor: Colors.white,
+    flex: 1,
   },
 });
 

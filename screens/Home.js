@@ -2,10 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PhotoButton from '../components/icons/PhotoButton';
 import Leaf from '../components/icons/Leaf';
+import StatusBarCustom from '../components/StatusBarCustom';
+import { Colors } from '../styles';
 
 const Home = () => {
   return (
     <View style={styles.container}>
+      <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
       <PhotoButton />
       <Text style={styles.text}>PRESS THE BUTTON TO TAKE PHOTO</Text>
       <Leaf style={[styles.leaf, styles.firstLeaf]} />
