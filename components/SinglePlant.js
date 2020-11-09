@@ -7,18 +7,18 @@ const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
     backgroundColor: '#499D32',
   };
   return (
-    <View style={[styles.box, boxColor]}>
+    <TouchableOpacity onPress={handlePress} style={[styles.box, boxColor]}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: photoUrl }} style={styles.image} />
       </View>
       <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
         <Text style={styles.date}>{date}</Text>
-        <TouchableOpacity style={styles.infoContainer} onPress={handlePress}>
+        <View style={styles.infoContainer} onPress={handlePress}>
           <Text style={styles.info}>ADD TO YOUR PLANT'S HOME</Text>
-        </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
