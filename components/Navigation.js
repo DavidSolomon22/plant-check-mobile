@@ -8,14 +8,12 @@ import PlantHistoryIcon from './icons/PlantHistoryIcon';
 import ProfileIcon from './icons/ProfileIcon';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
 import PlantHistoryList from '../screens/PlantHistoryList';
-import SecondScreen from '../screens/SecondScreen';
 import Home from '../screens/Home';
 
 const BottomTab = createBottomTabNavigator();
 
 const PlantHistoryListStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const SecondPageStack = createStackNavigator();
 const ThirdPageStack = createStackNavigator();
 
 const PlantHistoryListStackScreen = () => {
@@ -41,14 +39,6 @@ const HomeStackScreen = () => {
   );
 };
 
-const SecondPageStackScreen = () => {
-  return (
-    <SecondPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <SecondPageStack.Screen name="SecondScreen" component={SecondScreen} />
-    </SecondPageStack.Navigator>
-  );
-};
-
 const ThirdPageStackScreen = () => {
   return (
     <ThirdPageStack.Navigator screenOptions={{ headerShown: false }}>
@@ -61,7 +51,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <BottomTab.Navigator
-        initialRouteName="PlantHistoryListStackTab"
+        initialRouteName="HomeStackTab"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let tabIcon;
