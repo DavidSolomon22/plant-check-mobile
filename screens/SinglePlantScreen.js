@@ -12,13 +12,26 @@ import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import OverviewItem from '../components/OverviewItem';
 import { ICON_NAMES } from '../components/constants';
+import GoBackIcon from '../components/icons/GoBackIcon';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const SinglePlantScreen = ({ route }) => {
+const SinglePlantScreen = (props) => {
+  const { route, navigation } = props;
   return (
     <SafeAreaView style={[styles.container, stylesGlobal.androidSafeArea]}>
       <StatusBar backgroundColor={Colors.green} />
       <View style={styles.greenContainer}>
-        <Text style={styles.textStyle}>{route.params.plantName}</Text>
+        <View style={styles.plantNameAndGoBackArrowContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('PlantHistoryList');
+            }}
+          >
+            <GoBackIcon />
+          </TouchableOpacity>
+          <Text style={styles.textStyle}>{route.params.plantName}</Text>
+        </View>
+
         <View style={styles.photoAndButtonContainer}>
           <View style={styles.imageContainer}>
             <Image
@@ -28,6 +41,7 @@ const SinglePlantScreen = ({ route }) => {
               }}
             />
           </View>
+
           <View style={styles.detailsTextContainer}>
             <Text style={styles.detailsText}>GO TO DETAILS</Text>
           </View>
@@ -78,12 +92,18 @@ const styles = StyleSheet.create({
     flex: 4.5,
     backgroundColor: Colors.white,
   },
+  plantNameAndGoBackArrowContainer: {
+    marginTop: 25,
+    paddingLeft: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
   textStyle: {
     fontSize: 60,
     color: Colors.white,
     fontFamily: 'Staatliches',
-    marginTop: 25,
-    paddingLeft: 25,
+    paddingLeft: 15,
   },
   photoAndButtonContainer: {
     alignItems: 'center',

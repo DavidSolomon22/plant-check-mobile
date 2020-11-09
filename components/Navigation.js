@@ -24,7 +24,6 @@ const PlantHistoryListStackScreen = () => {
         component={PlantHistoryList}
       />
       <PlantHistoryListStack.Screen
-        screenOptions={{ headerShown: false }}
         name="SinglePlantScreen"
         component={SinglePlantScreen}
       />
