@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PhotoButton from '../components/icons/PhotoButton';
 import Leaf from '../components/icons/Leaf';
 import StatusBarCustom from '../components/StatusBarCustom';
 import { Colors } from '../styles';
+// ai specific imports
+import * as tf from '@tensorflow/tfjs';
+import { fetch, bundleResourceIO } from '@tensorflow/tfjs-react-native';
 
 const Home = () => {
+  const [isTfReady, setTfReady] = useState(false); // gets and sets the Tensorflow.js module loading status
+  const [model, setModel] = useState(null); // gets and sets the locally saved Tensorflow.js model
+  const [image, setImage] = useState(null); // gets and sets the image selected from the user
+  const [predictions, setPredictions] = useState(null); // gets and sets the predicted value from the model
+  const [error, setError] = useState(false); // gets and sets any errors
+
+  useEffect(() => {
+    (async () => {
+      await tf.ready(); // wait for Tensorflow.js to get ready
+      setTfReady(true); // set the state
+
+      // bundle the model files and load the model:
+      const model = require('../assets/ai/model.json');
+      const weights = require('../assets/ai/weights.bin');
+      const loadedModel = await tf.loadLayersModel(
+        bundleResourceIO(model, weights),
+      );
+
+      const rosemoet = require('../assets/images/rosemoet.jpg');
+      setModel(loadedModel); // load the model to the state
+
+      // getPermissionAsync(); // get the permission for camera roll access for iOS users
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
