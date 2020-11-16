@@ -7,6 +7,9 @@ import { Colors } from '../styles';
 // ai specific imports
 import * as tf from '@tensorflow/tfjs';
 import { fetch, bundleResourceIO } from '@tensorflow/tfjs-react-native';
+import * as jpeg from 'jpeg-js';
+import * as FileSystem from 'expo-file-system';
+import { Asset } from 'expo-asset';
 
 const Home = () => {
   const [isTfReady, setTfReady] = useState(false); // gets and sets the Tensorflow.js module loading status
@@ -26,13 +29,37 @@ const Home = () => {
       const loadedModel = await tf.loadLayersModel(
         bundleResourceIO(model, weights),
       );
-
-      const rosemoet = require('../assets/images/rosemoet.jpg');
       setModel(loadedModel); // load the model to the state
+      // const rosemoet = require('../assets/images/rosemoet.jpg');
+      const img = Asset.fromModule(require('../assets/images/rosemoet.jpg'));
+      await img.downloadAsync();
+      const imgB64 = await FileSystem.readAsStringAsync(img.localUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
+      const raw = new Uint8Array(imgBuffer);
+
+      const imgTensor = imgToTensor(raw);
+      // console.log(imgTensor);
+      const prediction = loadedModel.predict(imgTensor);
+      console.log(prediction.dataSync()[0]);
 
       // getPermissionAsync(); // get the permission for camera roll access for iOS users
     })();
   }, []);
+
+  function imgToTensor(imgRaw) {
+    const { width, height, data } = jpeg.decode(imgRaw, true);
+    const buffer = new Uint8Array(width * height * 3);
+    let offset = 0;
+    for (let i = 0; i < buffer.length; i += 3) {
+      buffer[i] = data[offset];
+      buffer[i + 1] = data[offset + 1];
+      buffer[i + 2] = data[offset + 2];
+      offset += 4;
+    }
+    return tf.tensor4d(buffer, [1, height, width, 3]);
+  }
 
   return (
     <View style={styles.container}>
