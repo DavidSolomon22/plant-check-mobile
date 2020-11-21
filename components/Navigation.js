@@ -9,6 +9,7 @@ import ProfileIcon from './icons/ProfileIcon';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
 import PlantHistoryList from '../screens/PlantHistoryList';
 import Home from '../screens/Home';
+import TakePhotoScreen from '../screens/TakePhotoScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -42,7 +43,10 @@ const HomeStackScreen = () => {
 const ThirdPageStackScreen = () => {
   return (
     <ThirdPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <ThirdPageStack.Screen name="ThirdScreen" component={ThirdScreen} />
+      <ThirdPageStack.Screen
+        name="TakePhotoScreen"
+        component={TakePhotoScreen}
+      />
     </ThirdPageStack.Navigator>
   );
 };

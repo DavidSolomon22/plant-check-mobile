@@ -29,6 +29,7 @@ const Home = () => {
       const loadedModel = await tf.loadLayersModel(
         bundleResourceIO(model, weights),
       );
+      // console.log('MODEL:', model.predict();
       setModel(loadedModel); // load the model to the state
       // const rosemoet = require('../assets/images/rosemoet.jpg');
       const img = Asset.fromModule(require('../assets/images/rosemoet.jpg'));
