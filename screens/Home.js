@@ -31,18 +31,16 @@ const Home = () => {
       );
       setModel(loadedModel); // load the model to the state
       // const rosemoet = require('../assets/images/rosemoet.jpg');
-      const img = Asset.fromModule(require('../assets/images/rosemoet.jpg'));
+      const img = Asset.fromModule(require('../assets/images/tulip.jpg'));
       await img.downloadAsync();
       const imgB64 = await FileSystem.readAsStringAsync(img.localUri, {
         encoding: FileSystem.EncodingType.Base64,
       });
       const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
       const raw = new Uint8Array(imgBuffer);
-
       const imgTensor = imgToTensor(raw);
-      // console.log(imgTensor);
       const prediction = loadedModel.predict(imgTensor);
-      console.log(prediction.dataSync()[0]);
+      console.log(prediction);
 
       // getPermissionAsync(); // get the permission for camera roll access for iOS users
     })();
