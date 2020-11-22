@@ -29,9 +29,13 @@ const SinglePlantScreen = (props) => {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={{
-                uri: route.params.photoUrl,
-              }}
+              source={
+                route.isPhotoFromUrl
+                  ? {
+                      uri: route.params.photoUrl,
+                    }
+                  : route.params.photoUrl
+              }
             />
           </View>
 

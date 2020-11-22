@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PhotoButton from '../components/icons/PhotoButton';
 import Leaf from '../components/icons/Leaf';
 import StatusBarCustom from '../components/StatusBarCustom';
@@ -11,7 +11,7 @@ import * as jpeg from 'jpeg-js';
 import * as FileSystem from 'expo-file-system';
 import { Asset } from 'expo-asset';
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [isTfReady, setTfReady] = useState(false); // gets and sets the Tensorflow.js module loading status
   const [model, setModel] = useState(null); // gets and sets the locally saved Tensorflow.js model
   const [image, setImage] = useState(null); // gets and sets the image selected from the user
@@ -29,6 +29,7 @@ const Home = () => {
       const loadedModel = await tf.loadLayersModel(
         bundleResourceIO(model, weights),
       );
+      // console.log('MODEL:', model.predict();
       setModel(loadedModel); // load the model to the state
       // const rosemoet = require('../assets/images/rosemoet.jpg');
       const img = Asset.fromModule(require('../assets/images/tulip.jpg'));
