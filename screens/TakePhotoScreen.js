@@ -9,19 +9,19 @@ import {
 import { Camera } from 'expo-camera';
 import stylesGlobal from '../styles/style';
 
-const TakePhotoScreen = () => {
+const TakePhotoScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [photo, setPhoto] = useState(null);
+  const [displayPhoto, handleDisplayPhoto] = useState(false);
 
-  const handleTakePhoto = () => {
-    async () => {
-      if (cameraRef) {
-        let photoFromCamera = await cameraRef.takePictureAsync();
-        setPhoto(photoFromCamera);
-      }
-    };
+  const handleTakePhoto = async () => {
+    if (cameraRef) {
+      let photoFromCamera = await cameraRef.takePictureAsync();
+      setPhoto(photoFromCamera);
+      handleDisplayPhoto(true);
+    }
   };
 
   useEffect(() => {
@@ -39,8 +39,30 @@ const TakePhotoScreen = () => {
     return <Text>No access to camera</Text>;
   }
 
-  if (photo) {
-    return <ImageBackground source={photo} style={styles.container} />;
+  if (displayPhoto) {
+    return (
+      <ImageBackground source={photo} style={styles.photoContainer}>
+        <TouchableOpacity
+          onPress={() => {
+            handleDisplayPhoto(false);
+          }}
+        >
+          <Text style={[styles.text, stylesGlobal.font]}>Retake</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('SinglePlantScreen', {
+              plantName: 'cactus',
+              photoUrl: photo,
+              isPhotoFromUrl: false,
+            });
+          }}
+        >
+          <Text style={[styles.text, stylesGlobal.font]}>Predict</Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    );
   }
 
   return (
@@ -67,7 +89,7 @@ const TakePhotoScreen = () => {
             );
           }}
         >
-          <Text style={[styles.flipText, stylesGlobal.font]}> Flip </Text>
+          <Text style={[styles.text, stylesGlobal.font]}> Flip </Text>
         </TouchableOpacity>
       </View>
     </Camera>
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'column',
   },
-  flipText: {
+  text: {
     fontSize: 25,
     marginBottom: 10,
     color: 'white',
@@ -113,6 +135,12 @@ const styles = StyleSheet.create({
   flipButton: {
     position: 'absolute',
     right: '3%',
+  },
+  photoContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
   },
 });
 

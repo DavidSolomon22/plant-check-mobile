@@ -48,7 +48,7 @@ const PLANTS = [
   },
 ];
 
-const PlantHistoryList = ({ navigation }) => {
+const PlantHistoryListScreen = ({ navigation }) => {
   return (
     <View style={[globalStyles.androidSafeArea, styles.plant]}>
       <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
@@ -71,6 +71,7 @@ const PlantHistoryList = ({ navigation }) => {
               navigation.navigate('SinglePlantScreen', {
                 plantName: item.plantName,
                 photoUrl: item.photoUrl,
+                isPhotoFromUrl: true,
               });
             }}
           />
@@ -99,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PlantHistoryList;
+export default PlantHistoryListScreen;

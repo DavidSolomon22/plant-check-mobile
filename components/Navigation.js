@@ -7,7 +7,7 @@ import PlantIcon from './icons/PlantIcon';
 import PlantHistoryIcon from './icons/PlantHistoryIcon';
 import ProfileIcon from './icons/ProfileIcon';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
-import PlantHistoryList from '../screens/PlantHistoryList';
+import PlantHistoryListScreen from '../screens/PlantHistoryListScreen';
 import Home from '../screens/Home';
 import TakePhotoScreen from '../screens/TakePhotoScreen';
 
@@ -21,8 +21,8 @@ const PlantHistoryListStackScreen = () => {
   return (
     <PlantHistoryListStack.Navigator screenOptions={{ headerShown: false }}>
       <PlantHistoryListStack.Screen
-        name="PlantHistoryList"
-        component={PlantHistoryList}
+        name="PlantHistoryListScreen"
+        component={PlantHistoryListScreen}
       />
       <PlantHistoryListStack.Screen
         name="SinglePlantScreen"
@@ -36,6 +36,11 @@ const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="TakePhotoScreen" component={TakePhotoScreen} />
+      <HomeStack.Screen
+        name="SinglePlantScreen"
+        component={SinglePlantScreen}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -46,6 +51,10 @@ const ThirdPageStackScreen = () => {
       <ThirdPageStack.Screen
         name="TakePhotoScreen"
         component={TakePhotoScreen}
+      />
+      <ThirdPageStack.Screen
+        name="SinglePlantScreen"
+        component={SinglePlantScreen}
       />
     </ThirdPageStack.Navigator>
   );
