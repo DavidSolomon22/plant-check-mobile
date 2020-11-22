@@ -13,14 +13,17 @@ const TakePhotoScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+
   const [photoUri, setPhotoUri] = useState(null);
-  const [displayPhoto, handleDisplayPhoto] = useState(false);
 
   const handleTakePhoto = async () => {
     if (cameraRef) {
       const { uri, width, height } = await cameraRef.takePictureAsync();
-      handleDisplayPhoto(true);
+
       setPhotoUri(uri);
+      navigation.navigate('DisplayTakenPhotoScreen', {
+        photoUrl: photoUri,
+      });
     }
   };
 
@@ -37,31 +40,6 @@ const TakePhotoScreen = ({ navigation }) => {
 
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
-  }
-
-  if (displayPhoto) {
-    return (
-      <ImageBackground source={{ uri: photoUri }} style={styles.photoContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            handleDisplayPhoto(false);
-          }}
-        >
-          <Text style={[styles.text, stylesGlobal.font]}>Retake</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('SinglePlantScreen', {
-              plantName: 'cactus',
-              photoUrl: photoUri,
-            });
-          }}
-        >
-          <Text style={[styles.text, stylesGlobal.font]}>Predict</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-    );
   }
 
   return (
