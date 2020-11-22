@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
 
-const ThirdScreen = () => {
+const UserProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>ThirdScreen</Text>
+      <Text>UserProfileScreen</Text>
     </SafeAreaView>
   );
 };
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   image: {},
 });
 
-export default ThirdScreen;
+export default UserProfileScreen;

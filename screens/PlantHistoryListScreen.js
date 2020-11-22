@@ -71,7 +71,6 @@ const PlantHistoryListScreen = ({ navigation }) => {
               navigation.navigate('SinglePlantScreen', {
                 plantName: item.plantName,
                 photoUrl: item.photoUrl,
-                isPhotoFromUrl: true,
               });
             }}
           />
