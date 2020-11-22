@@ -18,54 +18,55 @@ const Home = ({ navigation }) => {
   const [predictions, setPredictions] = useState(null); // gets and sets the predicted value from the model
   const [error, setError] = useState(false); // gets and sets any errors
 
-  useEffect(() => {
-    (async () => {
-      await tf.ready(); // wait for Tensorflow.js to get ready
-      setTfReady(true); // set the state
+  // useEffect(() => {
+  //   (async () => {
+  //     await tf.ready(); // wait for Tensorflow.js to get ready
+  //     setTfReady(true); // set the state
 
-      // bundle the model files and load the model:
-      const model = require('../assets/ai/model.json');
-      const weights = require('../assets/ai/weights.bin');
-      const loadedModel = await tf.loadLayersModel(
-        bundleResourceIO(model, weights),
-      );
-      // console.log('MODEL:', model.predict();
-      setModel(loadedModel); // load the model to the state
-      // const rosemoet = require('../assets/images/rosemoet.jpg');
-      const img = Asset.fromModule(require('../assets/images/rosemoet.jpg'));
-      await img.downloadAsync();
-      const imgB64 = await FileSystem.readAsStringAsync(img.localUri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-      const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
-      const raw = new Uint8Array(imgBuffer);
+  //     // bundle the model files and load the model:
+  //     const model = require('../assets/ai/model.json');
+  //     const weights = require('../assets/ai/weights.bin');
+  //     const loadedModel = await tf.loadLayersModel(
+  //       bundleResourceIO(model, weights),
+  //     );
+  //     // console.log('MODEL:', model.predict();
+  //     setModel(loadedModel); // load the model to the state
+  //     // const rosemoet = require('../assets/images/rosemoet.jpg');
+  //     const img = Asset.fromModule(require('../assets/images/rosemoet.jpg'));
+  //     await img.downloadAsync();
+  //     const imgB64 = await FileSystem.readAsStringAsync(img.localUri, {
+  //       encoding: FileSystem.EncodingType.Base64,
+  //     });
+  //     const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
+  //     const raw = new Uint8Array(imgBuffer);
 
-      const imgTensor = imgToTensor(raw);
-      // console.log(imgTensor);
-      const prediction = loadedModel.predict(imgTensor);
-      console.log(prediction.dataSync()[0]);
+  //     const imgTensor = imgToTensor(raw);
+  //     // console.log(imgTensor);
+  //     const prediction = loadedModel.predict(imgTensor);
+  //     console.log(prediction.dataSync()[0]);
 
-      // getPermissionAsync(); // get the permission for camera roll access for iOS users
-    })();
-  }, []);
+  //     // getPermissionAsync(); // get the permission for camera roll access for iOS users
+  //   })();
+  // }, []);
 
-  function imgToTensor(imgRaw) {
-    const { width, height, data } = jpeg.decode(imgRaw, true);
-    const buffer = new Uint8Array(width * height * 3);
-    let offset = 0;
-    for (let i = 0; i < buffer.length; i += 3) {
-      buffer[i] = data[offset];
-      buffer[i + 1] = data[offset + 1];
-      buffer[i + 2] = data[offset + 2];
-      offset += 4;
-    }
-    return tf.tensor4d(buffer, [1, height, width, 3]);
-  }
+  // function imgToTensor(imgRaw) {
+  //   const { width, height, data } = jpeg.decode(imgRaw, true);
+  //   const buffer = new Uint8Array(width * height * 3);
+  //   let offset = 0;
+  //   for (let i = 0; i < buffer.length; i += 3) {
+  //     buffer[i] = data[offset];
+  //     buffer[i + 1] = data[offset + 1];
+  //     buffer[i + 2] = data[offset + 2];
+  //     offset += 4;
+  //   }
+  //   return tf.tensor4d(buffer, [1, height, width, 3]);
+  // }
 
   return (
     <View style={styles.container}>
-      <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
-      <PhotoButton />
+      <TouchableOpacity onPress={navigation.navigate('TakePhotoScreen')}>
+        <PhotoButton />
+      </TouchableOpacity>
       <Text style={styles.text}>PRESS THE BUTTON TO TAKE PHOTO</Text>
       <Leaf style={[styles.leaf, styles.firstLeaf]} />
       <Leaf style={[styles.leaf, styles.secondLeaf]} />
