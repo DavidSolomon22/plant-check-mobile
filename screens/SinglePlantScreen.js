@@ -17,7 +17,9 @@ const SinglePlantScreen = (props) => {
         <View style={styles.plantNameAndGoBackArrowContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('PlantHistoryListScreen');
+              route.params.goBackAsResetStack
+                ? navigation.navigate('TakePhotoScreen')
+                : navigation.navigate('PlantHistoryListScreen');
             }}
           >
             <GoBackIcon />

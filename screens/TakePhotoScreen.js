@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
-} from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import stylesGlobal from '../styles/style';
 
@@ -19,13 +13,19 @@ const TakePhotoScreen = ({ navigation }) => {
   const handleTakePhoto = async () => {
     if (cameraRef) {
       const { uri, width, height } = await cameraRef.takePictureAsync();
-
       setPhotoUri(uri);
+    }
+    // navigation.navigate('DisplayTakenPhotoScreen', {
+    //   photoUrl: photoUri,
+    // } why not workking
+  };
+
+  useEffect(() => {
+    if (photoUri !== null)
       navigation.navigate('DisplayTakenPhotoScreen', {
         photoUrl: photoUri,
       });
-    }
-  };
+  }, [photoUri]);
 
   useEffect(() => {
     (async () => {
@@ -112,12 +112,6 @@ const styles = StyleSheet.create({
   flipButton: {
     position: 'absolute',
     right: '3%',
-  },
-  photoContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
   },
 });
 
