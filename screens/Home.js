@@ -62,8 +62,10 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
-      <PhotoButton />
+      <StatusBarCustom />
+      <TouchableOpacity onPress={() => navigation.navigate('TakePhotoScreen')}>
+        <PhotoButton />
+      </TouchableOpacity>
       <Text style={styles.text}>PRESS THE BUTTON TO TAKE PHOTO</Text>
       <Leaf style={[styles.leaf, styles.firstLeaf]} />
       <Leaf style={[styles.leaf, styles.secondLeaf]} />

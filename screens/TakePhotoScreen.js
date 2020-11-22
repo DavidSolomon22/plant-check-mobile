@@ -13,14 +13,14 @@ const TakePhotoScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [photo, setPhoto] = useState(null);
+  const [photoUri, setPhotoUri] = useState(null);
   const [displayPhoto, handleDisplayPhoto] = useState(false);
 
   const handleTakePhoto = async () => {
     if (cameraRef) {
-      let photoFromCamera = await cameraRef.takePictureAsync();
-      setPhoto(photoFromCamera);
+      const { uri, width, height } = await cameraRef.takePictureAsync();
       handleDisplayPhoto(true);
+      setPhotoUri(uri);
     }
   };
 
@@ -41,7 +41,7 @@ const TakePhotoScreen = ({ navigation }) => {
 
   if (displayPhoto) {
     return (
-      <ImageBackground source={photo} style={styles.photoContainer}>
+      <ImageBackground source={{ uri: photoUri }} style={styles.photoContainer}>
         <TouchableOpacity
           onPress={() => {
             handleDisplayPhoto(false);
@@ -54,8 +54,7 @@ const TakePhotoScreen = ({ navigation }) => {
           onPress={() => {
             navigation.navigate('SinglePlantScreen', {
               plantName: 'cactus',
-              photoUrl: photo,
-              isPhotoFromUrl: false,
+              photoUrl: photoUri,
             });
           }}
         >

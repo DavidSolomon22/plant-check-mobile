@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import ThirdScreen from '../screens/ThirdScreen';
+import UserProfileScreen from '../screens/UserProfileScreen';
 import PlantIcon from './icons/PlantIcon';
 import PlantHistoryIcon from './icons/PlantHistoryIcon';
 import ProfileIcon from './icons/ProfileIcon';
@@ -15,7 +15,7 @@ const BottomTab = createBottomTabNavigator();
 
 const PlantHistoryListStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const ThirdPageStack = createStackNavigator();
+const UserProfileStack = createStackNavigator();
 
 const PlantHistoryListStackScreen = () => {
   return (
@@ -34,7 +34,10 @@ const PlantHistoryListStackScreen = () => {
 
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="TakePhotoScreen" component={TakePhotoScreen} />
       <HomeStack.Screen
@@ -45,18 +48,14 @@ const HomeStackScreen = () => {
   );
 };
 
-const ThirdPageStackScreen = () => {
+const UserProfileStackScreen = () => {
   return (
-    <ThirdPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <ThirdPageStack.Screen
-        name="TakePhotoScreen"
-        component={TakePhotoScreen}
+    <UserProfileStack.Navigator screenOptions={{ headerShown: false }}>
+      <UserProfileStack.Screen
+        name="UserProfileScreen"
+        component={UserProfileScreen}
       />
-      <ThirdPageStack.Screen
-        name="SinglePlantScreen"
-        component={SinglePlantScreen}
-      />
-    </ThirdPageStack.Navigator>
+    </UserProfileStack.Navigator>
   );
 };
 
@@ -98,8 +97,8 @@ const Navigation = () => {
         />
         <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
         <BottomTab.Screen
-          name="ThirdScreenTab"
-          component={ThirdPageStackScreen}
+          name="UserProfileTab"
+          component={UserProfileStackScreen}
         />
       </BottomTab.Navigator>
     </NavigationContainer>
