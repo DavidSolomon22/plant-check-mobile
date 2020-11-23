@@ -69,10 +69,13 @@ const TakePhotoScreen = ({ navigation }) => {
         return b.probability - a.probability;
       })
       .slice(0, 1);
-
-    //const index = tf.argMax(prediction);
     console.log(plantName[0].className);
     setLoading(false);
+    navigation.navigate('SinglePlantScreen', {
+      plantName: plantName[0].className,
+      photoUrl: photoUri,
+      isPhotoFromUrl: false,
+    });
   };
 
   function imgToTensor(imgRaw) {
@@ -106,7 +109,7 @@ const TakePhotoScreen = ({ navigation }) => {
     return (
       <ImageBackground source={{ uri: photoUri }} style={styles.photoContainer}>
         <View style={styles.spinner}>
-          <ActivityIndicator animating={loding} size="large" color="#499D32" />
+          <ActivityIndicator animating={loding} size="large" color="white" />
         </View>
         <TouchableOpacity
           onPress={() => {
@@ -119,11 +122,6 @@ const TakePhotoScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => {
             predictPhoto();
-            // navigation.navigate('SinglePlantScreen', {
-            //   plantName: 'cactus',
-            //   photoUrl: photo,
-            //   isPhotoFromUrl: false,
-            // });
           }}
         >
           <Text style={[styles.text, stylesGlobal.font]}>Predict</Text>
