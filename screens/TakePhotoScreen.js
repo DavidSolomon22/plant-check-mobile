@@ -12,19 +12,17 @@ const TakePhotoScreen = ({ navigation }) => {
 
   const handleTakePhoto = async () => {
     if (cameraRef) {
-      const { uri, width, height } = await cameraRef.takePictureAsync();
+      const { uri } = await cameraRef.takePictureAsync();
       setPhotoUri(uri);
     }
-    // navigation.navigate('DisplayTakenPhotoScreen', {
-    //   photoUrl: photoUri,
-    // } why not workking
   };
 
   useEffect(() => {
-    if (photoUri !== null)
+    if (photoUri !== null) {
       navigation.navigate('DisplayTakenPhotoScreen', {
         photoUrl: photoUri,
       });
+    }
   }, [photoUri]);
 
   useEffect(() => {
