@@ -10,6 +10,7 @@ import SinglePlantScreen from '../screens/SinglePlantScreen';
 import PlantHistoryListScreen from '../screens/PlantHistoryListScreen';
 import Home from '../screens/Home';
 import TakePhotoScreen from '../screens/TakePhotoScreen';
+import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -43,6 +44,10 @@ const HomeStackScreen = () => {
       <HomeStack.Screen
         name="SinglePlantScreen"
         component={SinglePlantScreen}
+      />
+      <HomeStack.Screen
+        name="DisplayTakenPhotoScreen"
+        component={DisplayTakenPhotoScreen}
       />
     </HomeStack.Navigator>
   );
