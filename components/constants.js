@@ -1,6 +1,0 @@
-export const ICON_NAMES = {
-  FERTALIZER: 'FERTALIZER',
-  POT: 'POT',
-  RAIN_DROP: 'RAIN_DROP',
-  SUN: 'SUN',
-};

@@ -111,6 +111,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: '3%',
   },
+  photoContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  spinner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default TakePhotoScreen;
