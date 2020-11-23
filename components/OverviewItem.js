@@ -5,18 +5,18 @@ import PotIcon from './icons/PotIcon';
 import RainDropIcon from './icons/RainDropIcon';
 import SunIcon from './icons/SunIcon';
 import FertalizerIcon from './icons/FertalizerIcon';
-import { ICON_NAMES } from './constants';
+import * as Constants from '../constants';
 
 const OverviewItem = ({ iconName, iconStatus }) => {
   return (
     <View style={styles.container}>
       <View style={styles.circle}>
-        {(iconName === ICON_NAMES.FERTALIZER && <FertalizerIcon />) ||
-          (iconName === ICON_NAMES.RAIN_DROP && <RainDropIcon />) ||
-          (iconName === ICON_NAMES.POT && (
+        {(iconName === Constants.ICON_NAMES.FERTALIZER && <FertalizerIcon />) ||
+          (iconName === Constants.ICON_NAMES.RAIN_DROP && <RainDropIcon />) ||
+          (iconName === Constants.ICON_NAMES.POT && (
             <PotIcon style={styles.potIconPosition} />
           )) ||
-          (iconName === ICON_NAMES.SUN && <SunIcon />)}
+          (iconName === Constants.ICON_NAMES.SUN && <SunIcon />)}
       </View>
       <Text style={styles.iconStatusText}>{iconStatus}</Text>
     </View>

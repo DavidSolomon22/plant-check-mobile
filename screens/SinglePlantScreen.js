@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import OverviewItem from '../components/OverviewItem';
-import { ICON_NAMES } from '../components/constants';
+import * as Constants from '../constants';
 import GoBackIcon from '../components/icons/GoBackIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import StatusBarCustom from '../components/StatusBarCustom';
@@ -48,7 +48,7 @@ const SinglePlantScreen = (props) => {
         <View style={styles.iconsContainer}>
           <View style={styles.rowIconContainer}>
             <FlatList
-              data={[ICON_NAMES.SUN, ICON_NAMES.RAIN_DROP]}
+              data={[Constants.ICON_NAMES.SUN, Constants.ICON_NAMES.RAIN_DROP]}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
                 <OverviewItem iconName={item} iconStatus="JACEK " />
@@ -59,7 +59,7 @@ const SinglePlantScreen = (props) => {
           </View>
           <View style={styles.rowIconContainer}>
             <FlatList
-              data={[ICON_NAMES.POT, ICON_NAMES.FERTALIZER]}
+              data={[Constants.ICON_NAMES.POT, Constants.ICON_NAMES.FERTALIZER]}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
                 <OverviewItem iconName={item} iconStatus="FILIP" />

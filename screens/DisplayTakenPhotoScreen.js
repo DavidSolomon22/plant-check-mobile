@@ -1,4 +1,3 @@
-// import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +7,13 @@ import {
   View,
 } from 'react-native';
 import stylesGlobal from '../styles/style';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 import * as jpeg from 'jpeg-js';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
+import * as Constants from '../constants';
 
 const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const [isTfReady, setTfReady] = useState(false);
@@ -46,6 +46,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     setModel(loadedModel);
     return loadedModel;
   };
+
   const imgToTensor = (imgRaw) => {
     const { width, height, data } = jpeg.decode(imgRaw, true);
     const buffer = new Uint8Array(width * height * 3);
@@ -74,17 +75,12 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   };
 
   const getPlantName = (prediction) => {
-    const classNames = ['daisy', 'dandelion', 'roses', 'sunflowers', 'tulips'];
     let plantName = Array.from(prediction)
-      .map(function (p, i) {
-        return {
-          probability: p,
-          className: classNames[i],
-        };
-      })
-      .sort(function (a, b) {
-        return b.probability - a.probability;
-      })
+      .map((p, i) => ({
+        probability: p,
+        className: Constants.PLANT_CLASS_NAMES[i],
+      }))
+      .sort((a, b) => b.probability - a.probability)
       .slice(0, 1);
     return plantName[0].className;
   };
