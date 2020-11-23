@@ -21,8 +21,21 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const predictPhoto = async () => {
-    const classNames = ['daisy', 'dandelion', 'roses', 'sunflowers', 'tulips'];
     setLoading(true);
+    const loadedModel = await loadNeuralNetwork();
+    const raw = await convertImage();
+    const imgTensor = imgToTensor(raw);
+    const prediction = await loadedModel.predict(imgTensor).data();
+    const predictedPlantName = getPlantName(prediction);
+    setLoading(false);
+    navigation.navigate('SinglePlantScreen', {
+      plantName: predictedPlantName,
+      photoUrl: route.params.photoUrl,
+      goBackAsResetStack: true,
+    });
+  };
+
+  const loadNeuralNetwork = async () => {
     await tf.ready();
     setTfReady(true);
     const model = require('../assets/ai/model.json');
@@ -31,6 +44,22 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
       bundleResourceIO(model, weights),
     );
     setModel(loadedModel);
+    return loadedModel;
+  };
+  const imgToTensor = (imgRaw) => {
+    const { width, height, data } = jpeg.decode(imgRaw, true);
+    const buffer = new Uint8Array(width * height * 3);
+    let offset = 0;
+    for (let i = 0; i < buffer.length; i += 3) {
+      buffer[i] = data[offset];
+      buffer[i + 1] = data[offset + 1];
+      buffer[i + 2] = data[offset + 2];
+      offset += 4;
+    }
+    return tf.tensor4d(buffer, [1, height, width, 3]);
+  };
+
+  const convertImage = async () => {
     const uriResize = await ImageManipulator.manipulateAsync(
       route.params.photoUrl,
       [{ resize: { width: 180, height: 180 } }],
@@ -41,9 +70,11 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     });
     const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
     const raw = new Uint8Array(imgBuffer);
-    const imgTensor = imgToTensor(raw);
-    const prediction = await loadedModel.predict(imgTensor).data();
-    console.log(prediction);
+    return raw;
+  };
+
+  const getPlantName = (prediction) => {
+    const classNames = ['daisy', 'dandelion', 'roses', 'sunflowers', 'tulips'];
     let plantName = Array.from(prediction)
       .map(function (p, i) {
         return {
@@ -55,27 +86,8 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
         return b.probability - a.probability;
       })
       .slice(0, 1);
-    console.log(plantName[0].className);
-    setLoading(false);
-    navigation.navigate('SinglePlantScreen', {
-      plantName: plantName[0].className,
-      photoUrl: route.params.photoUrl,
-      goBackAsResetStack: true,
-    });
+    return plantName[0].className;
   };
-
-  function imgToTensor(imgRaw) {
-    const { width, height, data } = jpeg.decode(imgRaw, true);
-    const buffer = new Uint8Array(width * height * 3);
-    let offset = 0;
-    for (let i = 0; i < buffer.length; i += 3) {
-      buffer[i] = data[offset];
-      buffer[i + 1] = data[offset + 1];
-      buffer[i + 2] = data[offset + 2];
-      offset += 4;
-    }
-    return tf.tensor4d(buffer, [1, height, width, 3]);
-  }
 
   const handleRetakePhoto = () => {
     navigation.navigate('TakePhotoScreen');
