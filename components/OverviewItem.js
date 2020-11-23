@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
-import stylesGlobal from '../styles/style';
+import { View, Text, StyleSheet } from 'react-native';
 import { Colors } from '../styles';
 import PotIcon from './icons/PotIcon';
 import RainDropIcon from './icons/RainDropIcon';
