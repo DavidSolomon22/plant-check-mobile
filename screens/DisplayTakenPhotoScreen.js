@@ -96,7 +96,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   return (
     <ImageBackground
       source={{ uri: route.params.photoUrl }}
-      style={styles.photoContainer}
+      style={[styles.photoContainer, loading ? styles.photoOpacity : null]}
     >
       <View style={styles.spinner}>
         <ActivityIndicator animating={loading} size="large" color="white" />
@@ -119,6 +119,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'flex-end',
     paddingBottom: '5%',
+  },
+
+  photoOpacity: {
+    opacity: 0.4,
   },
   text: {
     fontSize: 25,
