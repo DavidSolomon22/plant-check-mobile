@@ -2,12 +2,12 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import ThirdScreen from '../screens/ThirdScreen';
+import UserProfileScreen from '../screens/UserProfileScreen';
 import PlantIcon from './icons/PlantIcon';
 import PlantHistoryIcon from './icons/PlantHistoryIcon';
 import ProfileIcon from './icons/ProfileIcon';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
-import PlantHistoryList from '../screens/PlantHistoryList';
+import PlantHistoryListScreen from '../screens/PlantHistoryListScreen';
 import Home from '../screens/Home';
 import TakePhotoScreen from '../screens/TakePhotoScreen';
 import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
@@ -17,14 +17,14 @@ const BottomTab = createBottomTabNavigator();
 
 const PlantHistoryListStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const ThirdPageStack = createStackNavigator();
+const UserProfileStack = createStackNavigator();
 
 const PlantHistoryListStackScreen = () => {
   return (
     <PlantHistoryListStack.Navigator screenOptions={{ headerShown: false }}>
       <PlantHistoryListStack.Screen
-        name="PlantHistoryList"
-        component={PlantHistoryList}
+        name="PlantHistoryListScreen"
+        component={PlantHistoryListScreen}
       />
       <PlantHistoryListStack.Screen
         name="SinglePlantScreen"
@@ -36,17 +36,32 @@ const PlantHistoryListStackScreen = () => {
 
 const HomeStackScreen = () => {
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Home"
+    >
       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="TakePhotoScreen" component={TakePhotoScreen} />
+      <HomeStack.Screen
+        name="SinglePlantScreen"
+        component={SinglePlantScreen}
+      />
+      <HomeStack.Screen
+        name="DisplayTakenPhotoScreen"
+        component={DisplayTakenPhotoScreen}
+      />
     </HomeStack.Navigator>
   );
 };
 
-const ThirdPageStackScreen = () => {
+const UserProfileStackScreen = () => {
   return (
-    <ThirdPageStack.Navigator screenOptions={{ headerShown: false }}>
-      <ThirdPageStack.Screen name="ThirdScreen" component={ThirdScreen} />
-    </ThirdPageStack.Navigator>
+    <UserProfileStack.Navigator screenOptions={{ headerShown: false }}>
+      <UserProfileStack.Screen
+        name="UserProfileScreen"
+        component={UserProfileScreen}
+      />
+    </UserProfileStack.Navigator>
   );
 };
 

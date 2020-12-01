@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PhotoButton from '../components/icons/PhotoButton';
 import Leaf from '../components/icons/Leaf';
+import StatusBarCustom from '../components/StatusBarCustom';
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <PhotoButton />
+      <StatusBarCustom />
+      <TouchableOpacity onPress={() => navigation.navigate('TakePhotoScreen')}>
+        <PhotoButton />
+      </TouchableOpacity>
       <Text style={styles.text}>PRESS THE BUTTON TO TAKE PHOTO</Text>
       <Leaf style={[styles.leaf, styles.firstLeaf]} />
       <Leaf style={[styles.leaf, styles.secondLeaf]} />
