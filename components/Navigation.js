@@ -9,6 +9,9 @@ import ProfileIcon from './icons/ProfileIcon';
 import SinglePlantScreen from '../screens/SinglePlantScreen';
 import PlantHistoryList from '../screens/PlantHistoryList';
 import Home from '../screens/Home';
+import TakePhotoScreen from '../screens/TakePhotoScreen';
+import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
+import LoginRegisterScreen from '../screens/LoginRegisterScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -85,8 +88,8 @@ const Navigation = () => {
         />
         <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
         <BottomTab.Screen
-          name="ThirdScreenTab"
-          component={ThirdPageStackScreen}
+          name="UserProfileTab"
+          component={LoginRegisterScreen}
         />
       </BottomTab.Navigator>
     </NavigationContainer>
