@@ -11,6 +11,7 @@ import PlantHistoryListScreen from '../screens/PlantHistoryListScreen';
 import Home from '../screens/Home';
 import TakePhotoScreen from '../screens/TakePhotoScreen';
 import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -28,6 +29,10 @@ const PlantHistoryListStackScreen = () => {
       <PlantHistoryListStack.Screen
         name="SinglePlantScreen"
         component={SinglePlantScreen}
+      />
+      <PlantHistoryListStack.Screen
+        name="DetailsScreen"
+        component={DetailsScreen}
       />
     </PlantHistoryListStack.Navigator>
   );
@@ -49,6 +54,7 @@ const HomeStackScreen = () => {
         name="DisplayTakenPhotoScreen"
         component={DisplayTakenPhotoScreen}
       />
+      <HomeStack.Screen name="DetailsScreen" component={DetailsScreen} />
     </HomeStack.Navigator>
   );
 };
@@ -60,6 +66,7 @@ const UserProfileStackScreen = () => {
         name="UserProfileScreen"
         component={UserProfileScreen}
       />
+      <UserProfileStack.Screen name="DetailsScreen" component={DetailsScreen} />
     </UserProfileStack.Navigator>
   );
 };

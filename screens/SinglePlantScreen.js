@@ -38,7 +38,15 @@ const SinglePlantScreen = (props) => {
           </View>
 
           <View style={styles.detailsTextContainer}>
-            <Text style={styles.detailsText}>GO TO DETAILS</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('DetailsScreen', {
+                  plantName: route.params.plantName,
+                });
+              }}
+            >
+              <Text style={styles.detailsText}>GO TO DETAILS</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
