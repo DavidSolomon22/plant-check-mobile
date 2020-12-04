@@ -95,7 +95,7 @@ const Navigation = () => {
             return tabIcon;
           },
         })}
-        tabBarOptions={{ showLabel: false }}
+        tabBarOptions={{ showLabel: false, keyboardHidesTabBar: true }}
       >
         <BottomTab.Screen
           name="PlantHistoryListStackTab"
