@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import * as Constants from '../constants';
@@ -7,47 +14,87 @@ import * as Constants from '../constants';
 const DetailsScreen = (props) => {
   const { route } = props;
   return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <View style={styles.plantNameStyle}>
-          <Text style={styles.textStyle}>{route.params.plantName}</Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <View style={styles.plantNameStyle}>
+              <Text style={styles.textStyle}>{route.params.plantName}</Text>
+            </View>
+          </View>
+          <View style={[styles.firstContainer, stylesGlobal.androidSafeArea]}>
+            <View style={styles.textContainer}>
+              <Text style={styles.textTitle}>SUN EXPOSURE</Text>
+              <Text style={styles.text}>
+                {Constants.PLANT_DESCRIPTION.SUN_EXPOSURE}
+              </Text>
+            </View>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{
+                  uri:
+                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
+                }}
+                style={styles.image}
+              />
+            </View>
+          </View>
+          <View style={[styles.secondContainer, stylesGlobal.androidSafeArea]}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{
+                  uri:
+                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
+                }}
+                style={styles.imageReverse}
+              />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.textTitleReverse}>WATER</Text>
+              <Text style={styles.textReverse}>
+                {Constants.PLANT_DESCRIPTION.SUN_EXPOSURE}
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
-      <View style={[styles.firstContainer, stylesGlobal.androidSafeArea]}>
-        <View style={styles.textContainer}>
-          <Text style={styles.textTitle}>SUN EXPOSURE</Text>
-          <Text style={styles.text}>
-            {Constants.PLANT_DESCRIPTION.SUN_EXPOSURE}
-          </Text>
+        <View style={styles.container}>
+          <View style={[styles.firstContainer, stylesGlobal.androidSafeArea]}>
+            <View style={styles.textContainer}>
+              <Text style={styles.textTitle}>FERTALIZER</Text>
+              <Text style={styles.text}>
+                {Constants.PLANT_DESCRIPTION.FERTALIZER}
+              </Text>
+            </View>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{
+                  uri:
+                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
+                }}
+                style={styles.image}
+              />
+            </View>
+          </View>
+          <View style={[styles.secondContainer, stylesGlobal.androidSafeArea]}>
+            <View style={styles.imageContainer}>
+              <Image
+                source={{
+                  uri:
+                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
+                }}
+                style={styles.imageReverse}
+              />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.textTitleReverse}>POT SIZE</Text>
+              <Text style={styles.textReverse}>
+                {Constants.PLANT_DESCRIPTION.POT_SIZE}
+              </Text>
+            </View>
+          </View>
         </View>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{
-              uri:
-                'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
-            }}
-            style={styles.image}
-          />
-        </View>
-      </View>
-      <View style={[styles.secondContainer, stylesGlobal.androidSafeArea]}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{
-              uri:
-                'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
-            }}
-            style={styles.imageReverse}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.textTitleReverse}>WATER</Text>
-          <Text style={styles.textReverse}>
-            {Constants.PLANT_DESCRIPTION.SUN_EXPOSURE}
-          </Text>
-        </View>
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -55,6 +102,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
+  },
+  scroolContainer: {
+    height: '200%',
+    width: '100%',
   },
   textStyle: {
     fontSize: 60,
@@ -75,14 +126,13 @@ const styles = StyleSheet.create({
   },
   firstContainer: {
     flex: 5,
-    backgroundColor: Colors.white,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
+    marginBottom: '8%',
   },
   secondContainer: {
     flex: 5,
-    backgroundColor: Colors.white,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
@@ -126,7 +176,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 1,
-    elevation: 10,
     width: '60%',
     height: '100%',
   },
@@ -141,6 +190,10 @@ const styles = StyleSheet.create({
     height: '85%',
     width: '80%',
     borderRadius: 30,
+    marginTop: '8%',
+  },
+  secondPage: {
+    flex: 5,
   },
 });
 export default DetailsScreen;
