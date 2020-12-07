@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import stylesGlobal from '../styles/style';
 
 const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
   },
   info: {
     marginTop: 7,
-    fontSize: 15,
+    fontSize: Platform.OS === 'ios' ? 15 : 12,
     fontWeight: 'bold',
     fontFamily: 'Staatliches',
     textAlign: 'center',

@@ -6,6 +6,7 @@ import {
   View,
   Image,
   ScrollView,
+  Platform,
 } from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
@@ -111,14 +112,13 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: Colors.black,
     fontFamily: 'Staatliches',
-    paddingLeft: 15,
   },
   titleContainer: {
     flex: 2,
     backgroundColor: Colors.white,
   },
   plantNameStyle: {
-    marginTop: 25,
+    marginTop: Platform.OS === 'ios' ? 20 : 25,
     paddingLeft: 10,
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
+    marginBottom: Platform.OS === 'ios' ? '15%' : '10%',
   },
   textContainer: {
     width: '40%',
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     color: Colors.green,
     fontWeight: 'bold',
     fontFamily: 'Staatliches',
-    fontSize: 14,
+    fontSize: Platform.OS === 'ios' ? 14 : 13,
   },
   textReverse: {
     marginRight: '8%',
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     height: '85%',
     width: '80%',
     borderRadius: 30,
-    marginTop: '8%',
+    // marginTop: '2%',
   },
   secondPage: {
     flex: 5,
