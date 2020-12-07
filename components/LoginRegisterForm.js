@@ -235,6 +235,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Staatliches',
     fontSize: 14,
     textAlign: 'center',
+    paddingTop: 1,
   },
   submitButton: {
     width: 120,

@@ -3,7 +3,7 @@ import { StyleSheet, Text, SafeAreaView } from 'react-native';
 import LoginRegisterScreen from './LoginRegisterScreen';
 
 const UserProfileScreen = () => {
-  return <LoginRegisterScreen />;
+  return <LoginRegisterScreen isItLogin={false} />;
 };
 
 const styles = StyleSheet.create({

@@ -23,10 +23,7 @@ const LoginRegisterScreen = (props) => {
     console.log('form Value:', formValue);
   }, [formValue]);
 
-  let screenTitle = 'LOG IN';
-  if (props.isItLogin) {
-    screenTitle = props.isItLogin ? 'LOG IN' : 'REGISTER';
-  }
+  let screenTitle = props.isItLogin ? 'LOG IN' : 'REGISTER';
 
   return (
     <KeyboardAvoidingView scrollEnabled={false} style={styles.container}>
@@ -41,7 +38,7 @@ const LoginRegisterScreen = (props) => {
             <Text style={styles.blackText}>TO PROCEED </Text>
           </View>
           <LoginRegisterForm
-            isItLogin={true}
+            isItLogin={props.isItLogin}
             handleLoginRegistration={handleLoginRegistration}
           />
         </View>
