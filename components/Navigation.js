@@ -102,10 +102,7 @@ const Navigation = () => {
           component={PlantHistoryListStackScreen}
         />
         <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
-        <BottomTab.Screen
-          name="UserProfileTab"
-          component={LoginRegisterScreen}
-        />
+        <BottomTab.Screen name="UserProfileTab" component={UserProfileScreen} />
       </BottomTab.Navigator>
     </NavigationContainer>
   );

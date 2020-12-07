@@ -1,12 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import LoginRegisterScreen from './LoginRegisterScreen';
 
 const UserProfileScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>UserProfileScreen</Text>
-    </SafeAreaView>
-  );
+  return <LoginRegisterScreen />;
 };
 
 const styles = StyleSheet.create({
