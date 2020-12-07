@@ -26,24 +26,22 @@ const LoginRegisterScreen = (props) => {
   let screenTitle = props.isItLogin ? 'LOG IN' : 'REGISTER';
 
   return (
-    <KeyboardAvoidingView scrollEnabled={false} style={styles.container}>
-      <ScrollView
+    <ScrollView scrollEnabled={false} style={styles.container}>
+      <KeyboardAvoidingView
         scrollEnabled={false}
         contentContainerStyle={styles.container}
       >
-        <View>
-          <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
-          <View style={styles.textContainer}>
-            <Text style={styles.greenText}> {screenTitle} </Text>
-            <Text style={styles.blackText}>TO PROCEED </Text>
-          </View>
-          <LoginRegisterForm
-            isItLogin={props.isItLogin}
-            handleLoginRegistration={handleLoginRegistration}
-          />
+        <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
+        <View style={styles.textContainer}>
+          <Text style={styles.greenText}> {screenTitle} </Text>
+          <Text style={styles.blackText}>TO PROCEED </Text>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <LoginRegisterForm
+          isItLogin={props.isItLogin}
+          handleLoginRegistration={handleLoginRegistration}
+        />
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

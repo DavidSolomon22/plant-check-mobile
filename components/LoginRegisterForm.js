@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   greenStripeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '50%',
+    height: '54%',
     backgroundColor: Colors.green,
     shadowColor: '#000',
     shadowOffset: {
