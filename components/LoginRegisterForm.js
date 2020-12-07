@@ -5,11 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
 } from 'react-native';
-import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -31,6 +27,8 @@ function equalTo(ref, msg) {
 }
 
 yup.addMethod(yup.string, 'equalTo', equalTo);
+
+// validation schemes
 
 const loginFormValidationScheme = yup.object({
   username: yup.string().required(),
@@ -174,9 +172,25 @@ const LoginRegisterForm = ({ isItLogin, handleLoginRegistration }) => {
           )}
 
           {isItLogin ? (
-            <Text style={[styles.textsStyle, { fontSize: 23 }]}>LOG IN!</Text>
+            <Text
+              style={[
+                styles.textsStyle,
+                { fontSize: 23 },
+                { marginBottom: 35 },
+              ]}
+            >
+              LOG IN!
+            </Text>
           ) : (
-            <Text style={[styles.textsStyle, { fontSize: 23 }]}>SIGN UP!</Text>
+            <Text
+              style={[
+                styles.textsStyle,
+                { fontSize: 23 },
+                { marginBottom: 35 },
+              ]}
+            >
+              SIGN UP!
+            </Text>
           )}
         </View>
       )}
@@ -188,7 +202,7 @@ const styles = StyleSheet.create({
   greenStripeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '54%',
+    maxHeight: '60%',
     backgroundColor: Colors.green,
     shadowColor: '#000',
     shadowOffset: {
@@ -198,15 +212,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
   },
-  formContainer: {
-    alignItems: 'center',
-  },
   formFieldWithError: {
     height: '20%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: '2%',
+    paddingTop: '3%',
   },
   formField: {
     width: 255,
@@ -235,7 +246,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Staatliches',
     fontSize: 14,
     textAlign: 'center',
-    paddingTop: 1,
+    paddingTop: '1%',
+    marginBottom: '2%',
   },
   submitButton: {
     width: 120,
@@ -248,7 +260,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-    marginTop: '3%',
+    marginTop: '2%',
     justifyContent: 'center',
     alignItems: 'center',
   },
