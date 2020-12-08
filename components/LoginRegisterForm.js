@@ -12,22 +12,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 
-function equalTo(ref, msg) {
-  return this.test({
-    name: 'equalTo',
-    exclusive: false,
-    message: msg || '${path} must be the same as ${reference}',
-    params: {
-      reference: ref.path,
-    },
-    test: function (value) {
-      return value === this.resolve(ref);
-    },
-  });
-}
-
-yup.addMethod(yup.string, 'equalTo', equalTo);
-
 // validation schemes
 
 const loginFormValidationScheme = yup.object({
@@ -49,7 +33,9 @@ const registerFormValidationScheme = yup.object({
     .matches(/(?=.*[A-Z])/, 'One Uppercase letter is mandatory')
     .matches(/(?=.*[a-z])/, 'One lowercase letter is mandatory')
     .matches(/(?=.*[0-9])/, 'One number is mandatory'),
-  confirmPassword: yup.string().equalTo(yup.ref('password')),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
 const LoginRegisterForm = ({
