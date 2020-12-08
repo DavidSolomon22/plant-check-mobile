@@ -12,18 +12,27 @@ import { Colors } from '../styles';
 import LoginRegisterForm from '../components/LoginRegisterForm';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const LoginRegisterScreen = (props) => {
+const LoginRegisterScreen = ({ route, navigation }) => {
+  const isItLogin = route.params.isItLogin;
   const [formValue, setFormValue] = useState({});
 
   const handleLoginRegistration = (userInputData) => {
     setFormValue(userInputData);
   };
 
+  const redirectToLoginRegister = () => {
+    if (isItLogin) {
+      navigation.navigate('LoginRegisterScreen', { isItLogin: false });
+    } else {
+      navigation.navigate('LoginRegisterScreen', { isItLogin: true });
+    }
+  };
+
   useEffect(() => {
     console.log('form Value:', formValue);
   }, [formValue]);
 
-  let screenTitle = props.isItLogin ? 'LOG IN' : 'REGISTER';
+  let screenTitle = isItLogin ? 'LOG IN' : 'REGISTER';
 
   return (
     <ScrollView scrollEnabled={false} style={styles.container}>
@@ -37,8 +46,9 @@ const LoginRegisterScreen = (props) => {
           <Text style={styles.blackText}>TO PROCEED </Text>
         </View>
         <LoginRegisterForm
-          isItLogin={props.isItLogin}
+          isItLogin={isItLogin}
           handleLoginRegistration={handleLoginRegistration}
+          redirectToLoginRegister={redirectToLoginRegister}
         />
       </KeyboardAvoidingView>
     </ScrollView>

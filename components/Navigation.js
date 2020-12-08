@@ -61,6 +61,10 @@ const UserProfileStackScreen = () => {
         name="UserProfileScreen"
         component={UserProfileScreen}
       />
+      <UserProfileStack.Screen
+        name="LoginRegisterScreen"
+        component={LoginRegisterScreen}
+      />
     </UserProfileStack.Navigator>
   );
 };
@@ -102,7 +106,10 @@ const Navigation = () => {
           component={PlantHistoryListStackScreen}
         />
         <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
-        <BottomTab.Screen name="UserProfileTab" component={UserProfileScreen} />
+        <BottomTab.Screen
+          name="UserProfileTab"
+          component={UserProfileStackScreen}
+        />
       </BottomTab.Navigator>
     </NavigationContainer>
   );

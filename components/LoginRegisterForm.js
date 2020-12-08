@@ -11,6 +11,7 @@ import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
 
 function equalTo(ref, msg) {
   return this.test({
@@ -52,7 +53,11 @@ const registerFormValidationScheme = yup.object({
   confirmPassword: yup.string().equalTo(yup.ref('password')),
 });
 
-const LoginRegisterForm = ({ isItLogin, handleLoginRegistration }) => {
+const LoginRegisterForm = ({
+  isItLogin,
+  handleLoginRegistration,
+  redirectToLoginRegister,
+}) => {
   return (
     <Formik
       initialValues={
@@ -149,49 +154,55 @@ const LoginRegisterForm = ({ isItLogin, handleLoginRegistration }) => {
               <Text style={styles.submitButtonText}>REGISTER</Text>
             </TouchableOpacity>
           )}
-          {isItLogin ? (
-            <Text
-              style={[
-                styles.textsStyle,
-                { fontSize: 18 },
-                { paddingTop: '5%' },
-              ]}
-            >
-              IF YOU DON'T HAVE AN ACCOUNT
-            </Text>
-          ) : (
-            <Text
-              style={[
-                styles.textsStyle,
-                { fontSize: 18 },
-                { paddingTop: '5%' },
-              ]}
-            >
-              YOU ALREADY HAVE AN ACCOUNT?
-            </Text>
-          )}
 
-          {isItLogin ? (
-            <Text
-              style={[
-                styles.textsStyle,
-                { fontSize: 23 },
-                { marginBottom: 35 },
-              ]}
-            >
-              LOG IN!
-            </Text>
-          ) : (
-            <Text
-              style={[
-                styles.textsStyle,
-                { fontSize: 23 },
-                { marginBottom: 35 },
-              ]}
-            >
-              SIGN UP!
-            </Text>
-          )}
+          <TouchableOpacity
+            style={{ alignItems: 'center' }}
+            onPress={redirectToLoginRegister}
+          >
+            {isItLogin ? (
+              <Text
+                style={[
+                  styles.textsStyle,
+                  { fontSize: 18 },
+                  { paddingTop: '5%' },
+                ]}
+              >
+                IF YOU DON'T HAVE AN ACCOUNT
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  styles.textsStyle,
+                  { fontSize: 18 },
+                  { paddingTop: '5%' },
+                ]}
+              >
+                YOU ALREADY HAVE AN ACCOUNT?
+              </Text>
+            )}
+
+            {isItLogin ? (
+              <Text
+                style={[
+                  styles.textsStyle,
+                  { fontSize: 23 },
+                  { marginBottom: 35 },
+                ]}
+              >
+                SIGN UP!
+              </Text>
+            ) : (
+              <Text
+                style={[
+                  styles.textsStyle,
+                  { fontSize: 23 },
+                  { marginBottom: 35 },
+                ]}
+              >
+                LOG IN!
+              </Text>
+            )}
+          </TouchableOpacity>
         </View>
       )}
     </Formik>
@@ -248,6 +259,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: '1%',
     marginBottom: '2%',
+    // backgroundColor: 'grey',
   },
   submitButton: {
     width: 120,
