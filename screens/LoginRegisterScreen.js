@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import StatusBarCustom from '../components/StatusBarCustom';
 import { Colors } from '../styles';
 import LoginRegisterForm from '../components/LoginRegisterForm';

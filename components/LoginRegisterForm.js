@@ -11,7 +11,6 @@ import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
 
 function equalTo(ref, msg) {
   return this.test({
@@ -32,24 +31,24 @@ yup.addMethod(yup.string, 'equalTo', equalTo);
 // validation schemes
 
 const loginFormValidationScheme = yup.object({
-  username: yup.string().required(),
+  email: yup.string().required().email(),
   password: yup
     .string()
     .required()
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
-    ),
+    .min(8)
+    .matches(/(?=.*[A-Z])/, 'One Uppercase letter is mandatory')
+    .matches(/(?=.*[a-z])/, 'One lowercase letter is mandatory')
+    .matches(/(?=.*[0-9])/, 'One number is mandatory'),
 });
 const registerFormValidationScheme = yup.object({
-  username: yup.string().required(),
+  email: yup.string().required().email(),
   password: yup
     .string()
     .required()
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character',
-    ),
+    .min(8)
+    .matches(/(?=.*[A-Z])/, 'One Uppercase letter is mandatory')
+    .matches(/(?=.*[a-z])/, 'One lowercase letter is mandatory')
+    .matches(/(?=.*[0-9])/, 'One number is mandatory'),
   confirmPassword: yup.string().equalTo(yup.ref('password')),
 });
 
@@ -62,8 +61,8 @@ const LoginRegisterForm = ({
     <Formik
       initialValues={
         isItLogin
-          ? { username: '', password: '' }
-          : { username: '', password: '', confirmPassword: '' }
+          ? { email: '', password: '' }
+          : { email: '', password: '', confirmPassword: '' }
       }
       validationSchema={
         isItLogin ? loginFormValidationScheme : registerFormValidationScheme
@@ -88,14 +87,14 @@ const LoginRegisterForm = ({
               <FontAwesome5 name="user" size={24} color="#DADADA" />
               <TextInput
                 style={styles.formFieldText}
-                onChangeText={handleChange('username')}
-                onBlur={handleBlur('username')}
-                value={values.username}
-                placeholder="USERNAME"
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                placeholder="email"
               />
             </View>
             <Text style={styles.errorText}>
-              {touched.username && errors.username}
+              {touched.email && errors.email}
             </Text>
           </View>
 
