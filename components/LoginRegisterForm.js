@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   greenStripeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    maxHeight: '60%',
+    height: '55%',
     backgroundColor: Colors.green,
     shadowColor: '#000',
     shadowOffset: {
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
   },
   formFieldWithError: {
-    height: '20%',
+    height: '18%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
