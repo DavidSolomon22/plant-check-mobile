@@ -141,7 +141,7 @@ const LoginRegisterForm = ({
           )}
 
           <TouchableOpacity
-            style={{ alignItems: 'center' }}
+            style={styles.bottomText}
             onPress={redirectToLoginRegister}
           >
             {isItLogin ? (
@@ -244,7 +244,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingTop: '1%',
     marginBottom: '2%',
-    // backgroundColor: 'grey',
   },
   submitButton: {
     width: 120,
@@ -269,6 +268,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Staatliches',
     fontSize: 17,
   },
+  bottomText: { alignItems: 'center' },
 });
 
 export default LoginRegisterForm;

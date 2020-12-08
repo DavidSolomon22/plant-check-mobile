@@ -53,10 +53,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  container1: {
-    flex: 1,
-    backgroundColor: 'blue',
-  },
   textContainer: {
     flexDirection: 'column',
     alignItems: 'flex-start',
