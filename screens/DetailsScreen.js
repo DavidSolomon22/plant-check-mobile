@@ -101,7 +101,7 @@ const DetailsScreen = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.green,
     flex: 1,
   },
   scroolContainer: {
@@ -110,12 +110,12 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 60,
-    color: Colors.black,
+    color: Colors.white,
     fontFamily: 'Staatliches',
   },
   titleContainer: {
     flex: 2,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.green,
   },
   plantNameStyle: {
     marginTop: Platform.OS === 'ios' ? 20 : 25,
@@ -145,14 +145,14 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: '8%',
-    color: Colors.green,
+    color: Colors.white,
     fontWeight: 'bold',
     fontFamily: 'Staatliches',
     fontSize: Platform.OS === 'ios' ? 14 : 13,
   },
   textReverse: {
     marginRight: '8%',
-    color: Colors.green,
+    color: Colors.white,
     fontWeight: 'bold',
     fontFamily: 'Staatliches',
     fontSize: 14,
@@ -179,6 +179,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     width: '60%',
     height: '100%',
+    marginTop: '9%',
   },
   image: {
     marginLeft: '5%',
