@@ -55,3 +55,13 @@ export const ICON_NAMES = {
   RAIN_DROP: 'RAIN_DROP',
   SUN: 'SUN',
 };
+
+export const PLANT_DESCRIPTION = {
+  SUN_EXPOSURE: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis ligula sodales, porttitor elit sed, malesuada mi. Duis dictum tincidunt quam scelerisque iaculis. Donec velit risus, iaculis non turpis a, finibus congue dolor. Nunc et luctus sapien. Ut non ipsum tellus. Aliquam in cursus tortor Praesent`,
+  WATER:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis ligula sodales, porttitor elit sed, malesuada mi. Duis dictum tincidunt quam scelerisque iaculis. Donec velit risus, iaculis non turpis a, finibus congue dolor. Nunc et luctus sapien. Ut non ipsum tellus. Aliquam in cursus',
+  FERTALIZER:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis ligula sodales, porttitor elit sed, malesuada mi. Duis dictum tincidunt quam scelerisque iaculis. Donec velit risus, iaculis non turpis a, finibus congue dolor. Nunc et luctus sapien. Ut non ipsum tellus. Aliquam in cursus tortor. Praesent',
+  POT_SIZE:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis ligula sodales, porttitor elit sed, malesuada mi. Duis dictum tincidunt quam scelerisque iaculis. Donec velit risus, iaculis non turpis a, finibus congue dolor. Nunc et luctus sapien. Ut non ipsum tellus. Aliquam in cursus tortor. Praesent',
+};
