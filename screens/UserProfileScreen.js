@@ -1,11 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import LoginRegisterScreen from './LoginRegisterScreen';
 
-const UserProfileScreen = () => {
+const UserProfileScreen = ({ navigation }) => {
+  const goToLoginPage = () => {
+    navigation.navigate('LoginRegisterScreen', { isItLogin: false });
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>UserProfileScreen</Text>
-    </SafeAreaView>
+    <View style={[{ flex: 1 }, { justifyContent: 'center' }]}>
+      <TouchableOpacity onPress={goToLoginPage}>
+        <Text>Go to login page</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
