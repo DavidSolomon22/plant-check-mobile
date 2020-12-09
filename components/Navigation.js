@@ -11,6 +11,7 @@ import PlantHistoryListScreen from '../screens/PlantHistoryListScreen';
 import Home from '../screens/Home';
 import TakePhotoScreen from '../screens/TakePhotoScreen';
 import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
+import LoginRegisterScreen from '../screens/LoginRegisterScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -60,6 +61,10 @@ const UserProfileStackScreen = () => {
         name="UserProfileScreen"
         component={UserProfileScreen}
       />
+      <UserProfileStack.Screen
+        name="LoginRegisterScreen"
+        component={LoginRegisterScreen}
+      />
     </UserProfileStack.Navigator>
   );
 };
@@ -94,7 +99,7 @@ const Navigation = () => {
             return tabIcon;
           },
         })}
-        tabBarOptions={{ showLabel: false }}
+        tabBarOptions={{ showLabel: false, keyboardHidesTabBar: true }}
       >
         <BottomTab.Screen
           name="PlantHistoryListStackTab"
