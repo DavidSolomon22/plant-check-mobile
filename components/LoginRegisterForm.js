@@ -11,6 +11,7 @@ import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
+import { registerUser } from '../api/AuthAPI';
 
 // validation schemes
 
@@ -38,11 +39,7 @@ const registerFormValidationScheme = yup.object({
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
-const LoginRegisterForm = ({
-  isItLogin,
-  handleLoginRegistration,
-  redirectToLoginRegister,
-}) => {
+const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
   return (
     <Formik
       initialValues={
@@ -53,8 +50,18 @@ const LoginRegisterForm = ({
       validationSchema={
         isItLogin ? loginFormValidationScheme : registerFormValidationScheme
       }
-      onSubmit={(values, actions) => {
-        handleLoginRegistration(values);
+      onSubmit={async (values, actions) => {
+        try {
+          const axiosResponse = await registerUser(
+            'jacekeichler@gmail.com',
+            '12345678',
+          );
+          console.log('RESPONSE FROM AXIOS', axiosResponse);
+          console.log('RESPONSE FROM AXIOS', axiosResponse);
+        } catch (error) {
+          console.log(error);
+        }
+
         actions.resetForm();
       }}
     >
