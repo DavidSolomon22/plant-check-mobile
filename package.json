@@ -31,6 +31,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-dotenv": "^2.4.3",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-reanimated": "~1.13.0",
