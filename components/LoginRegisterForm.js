@@ -12,6 +12,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import { registerUser, loginUser } from '../api/AuthAPI';
+import * as SecureStore from 'expo-secure-store';
 
 // validation schemes
 
@@ -40,16 +41,32 @@ const registerFormValidationScheme = yup.object({
 });
 
 const handleRegistration = async (formValues) => {
-  console.log('handleRegistration');
-  const response = await registerUser(formValues.email, formValues.password);
-  console.log('response', response);
+  try {
+    console.log('VALUES', formValues);
+    console.log('handleRegistration');
+    const response = await registerUser(formValues.email, formValues.password);
+    console.log('response', response.data);
+  } catch (error) {
+    console.log('my error', error);
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  }
 };
 
 const handleLogin = async (formValues) => {
   try {
+    console.log('VALUES', formValues);
     console.log('handleLogin');
     const response = await loginUser(formValues.email, formValues.password);
-    console.log('response', response);
+    await SecureStore.setItemAsync('access_token', response.data.access_token);
+    await SecureStore.setItemAsync(
+      'refresh_token',
+      response.data.refresh_token,
+    );
+    const accessToken = await SecureStore.getItemAsync('access_token');
+    console.log('accessToken', accessToken);
+    console.log('response', response.data);
   } catch (error) {
     console.log('my error', error);
     console.log(error.response.data);
@@ -70,7 +87,6 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
         isItLogin ? loginFormValidationScheme : registerFormValidationScheme
       }
       onSubmit={async (values, actions) => {
-        console.log('VALUES', values);
         isItLogin ? handleLogin(values) : handleRegistration(values);
         actions.resetForm();
       }}
