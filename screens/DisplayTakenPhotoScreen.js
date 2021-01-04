@@ -14,6 +14,7 @@ import * as jpeg from 'jpeg-js';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as Constants from '../constants';
+import { createPlantPrediction } from '../api/plant-prediction/';
 
 const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const [isTfReady, setTfReady] = useState(false);
@@ -28,12 +29,28 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     const prediction = await loadedModel.predict(imgTensor).data();
     const predictedPlantName = getPlantName(prediction);
     setLoading(false);
+    const imageToSave = await resizeImage();
+    const resposne = await createPlantPrediction();
+    console.log(resposne);
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
       photoUrl: route.params.photoUrl,
       goBackAsResetStack: true,
     });
   };
+  // const uploadPhoto = async () => {
+  //   try {
+  //     const response = await createPlantPrediction();
+  //     // predictedPlantName,
+  //     // imageToSave.uri,
+  //     console.log('axios', response);
+  //   } catch (e) {
+  //     console.log(e);
+  //     // console.log(e.response.data);
+  //     // console.log(e.response.status);
+  //     // console.log(e.response.headers);
+  //   }
+  // };
 
   const loadNeuralNetwork = async () => {
     await tf.ready();
@@ -74,6 +91,15 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     return raw;
   };
 
+  const resizeImage = async () => {
+    const uriResize = await ImageManipulator.manipulateAsync(
+      route.params.photoUrl,
+      [{ resize: { width: 180, height: 180 } }],
+      { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
+    );
+    return uriResize;
+  };
+
   const getPlantName = (prediction) => {
     let plantName = Array.from(prediction)
       .map((p, i) => ({
@@ -89,8 +115,8 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     navigation.navigate('TakePhotoScreen');
   };
 
-  const handleGoToPrediction = () => {
-    predictPhoto();
+  const handleGoToPrediction = async () => {
+    await predictPhoto();
   };
 
   return (
@@ -105,7 +131,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
         <Text style={[styles.text, stylesGlobal.font]}>Retake</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleGoToPrediction}>
+      <TouchableOpacity onPress={() => handleGoToPrediction}>
         <Text style={[styles.text, stylesGlobal.font]}>Predict</Text>
       </TouchableOpacity>
     </ImageBackground>
