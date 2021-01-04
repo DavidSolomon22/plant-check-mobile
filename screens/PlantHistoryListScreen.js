@@ -15,11 +15,23 @@ const PlantHistoryListScreen = ({ navigation }) => {
         imageToSave,
       );
       console.log('axios', response);
-    } catch (e) {
-      console.error('From axios', e);
-      console.log(e.response.data);
-      console.log(e.response.status);
-      console.log(e.response.headers);
+    } catch (error) {
+      // console.error('From axios', e);
+      // console.log(e.response);
+      // // console.log(e.response.status);
+      // // console.log(e.response.headers);
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
     }
   };
 

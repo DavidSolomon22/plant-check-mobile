@@ -30,7 +30,10 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     const predictedPlantName = getPlantName(prediction);
     setLoading(false);
     const imageToSave = await resizeImage();
-    const resposne = await createPlantPrediction();
+    const resposne = await createPlantPrediction(
+      imageToSave,
+      predictedPlantName,
+    );
     console.log(resposne);
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
@@ -97,7 +100,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
       [{ resize: { width: 180, height: 180 } }],
       { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
     );
-    return uriResize;
+    return uriResize.uri;
   };
 
   const getPlantName = (prediction) => {
@@ -115,8 +118,8 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     navigation.navigate('TakePhotoScreen');
   };
 
-  const handleGoToPrediction = async () => {
-    await predictPhoto();
+  const handleGoToPrediction = () => {
+    predictPhoto();
   };
 
   return (
@@ -131,7 +134,11 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
         <Text style={[styles.text, stylesGlobal.font]}>Retake</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => handleGoToPrediction}>
+      <TouchableOpacity
+        onPress={async () => {
+          await predictPhoto();
+        }}
+      >
         <Text style={[styles.text, stylesGlobal.font]}>Predict</Text>
       </TouchableOpacity>
     </ImageBackground>
