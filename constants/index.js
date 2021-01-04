@@ -65,6 +65,3 @@ export const PLANT_DESCRIPTION = {
   POT_SIZE:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis ligula sodales, porttitor elit sed, malesuada mi. Duis dictum tincidunt quam scelerisque iaculis. Donec velit risus, iaculis non turpis a, finibus congue dolor. Nunc et luctus sapien. Ut non ipsum tellus. Aliquam in cursus tortor. Praesent',
 };
-
-export const GATEWAY_ORIGIN = 'http://localhost:8000';
-export const AUTH_ORIGIN = 'http://localhost:8081';

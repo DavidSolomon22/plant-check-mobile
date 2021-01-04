@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LoginRegisterScreen from './LoginRegisterScreen';
+import { registerUser } from '../api/AuthAPI';
 
 const UserProfileScreen = ({ navigation }) => {
   const goToLoginPage = () => {

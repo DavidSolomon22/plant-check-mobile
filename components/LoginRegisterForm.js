@@ -11,7 +11,7 @@ import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
-import { registerUser } from '../api/AuthAPI';
+import { registerUser, loginUser } from '../api/AuthAPI';
 
 // validation schemes
 
@@ -39,6 +39,25 @@ const registerFormValidationScheme = yup.object({
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
 
+const handleRegistration = async (formValues) => {
+  console.log('handleRegistration');
+  const response = await registerUser(formValues.email, formValues.password);
+  console.log('response', response);
+};
+
+const handleLogin = async (formValues) => {
+  try {
+    console.log('handleLogin');
+    const response = await loginUser(formValues.email, formValues.password);
+    console.log('response', response);
+  } catch (error) {
+    console.log('my error', error);
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  }
+};
+
 const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
   return (
     <Formik
@@ -51,17 +70,8 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
         isItLogin ? loginFormValidationScheme : registerFormValidationScheme
       }
       onSubmit={async (values, actions) => {
-        try {
-          const axiosResponse = await registerUser(
-            'jacekeichler@gmail.com',
-            '12345678',
-          );
-          console.log('RESPONSE FROM AXIOS', axiosResponse);
-          console.log('RESPONSE FROM AXIOS', axiosResponse);
-        } catch (error) {
-          console.log(error);
-        }
-
+        console.log('VALUES', values);
+        isItLogin ? handleLogin(values) : handleRegistration(values);
         actions.resetForm();
       }}
     >
@@ -79,6 +89,7 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
             <View style={styles.formField}>
               <FontAwesome5 name="user" size={24} color="#DADADA" />
               <TextInput
+                autoCapitalize="none"
                 style={styles.formFieldText}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
@@ -101,6 +112,7 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
                 value={values.password}
                 placeholder="PASSWORD"
                 secureTextEntry={true}
+                autoCapitalize="none"
               />
             </View>
             <Text style={styles.errorText}>
@@ -121,6 +133,7 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
                   value={values.confirmPassword}
                   placeholder="CONFIRM PASSWORD"
                   secureTextEntry={true}
+                  autoCapitalize="none"
                 />
               </View>
               <Text style={styles.errorText}>

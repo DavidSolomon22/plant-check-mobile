@@ -7,11 +7,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const LoginRegisterScreen = ({ route, navigation }) => {
   const isItLogin = route.params.isItLogin;
-  const [formValue, setFormValue] = useState({});
-
-  const handleLoginRegistration = (userInputData) => {
-    setFormValue(userInputData);
-  };
 
   const redirectToLoginRegister = () => {
     if (isItLogin) {
@@ -20,10 +15,6 @@ const LoginRegisterScreen = ({ route, navigation }) => {
       navigation.navigate('LoginRegisterScreen', { isItLogin: true });
     }
   };
-
-  useEffect(() => {
-    console.log('form Value:', formValue);
-  }, [formValue]);
 
   let screenTitle = isItLogin ? 'LOG IN' : 'REGISTER';
 
@@ -40,7 +31,6 @@ const LoginRegisterScreen = ({ route, navigation }) => {
         </View>
         <LoginRegisterForm
           isItLogin={isItLogin}
-          handleLoginRegistration={handleLoginRegistration}
           redirectToLoginRegister={redirectToLoginRegister}
         />
       </KeyboardAvoidingView>
