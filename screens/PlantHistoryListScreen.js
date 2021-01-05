@@ -1,25 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import SinglePlant from '../components/SinglePlant';
 import globalStyles from '../styles/style';
 import StatusBarCustom from '../components/StatusBarCustom';
 import { Colors } from '../styles';
 import * as Constants from '../constants';
-import { createPlantPrediction } from '../api/plant-prediction/';
+import { getUserPlantPredictions } from '../api/plant-prediction/';
 
 const PlantHistoryListScreen = ({ navigation }) => {
-  const predictPhoto = async (predictedPlantName, imageToSave) => {
+  const [dataSource, setDataSource] = useState([]);
+  const getPredictions = async () => {
     try {
-      const response = await createPlantPrediction(
-        predictedPlantName,
-        imageToSave,
-      );
-      console.log('axios', response);
+      const response = await getUserPlantPredictions();
+      setDataSource(response.data.predictions);
     } catch (error) {
-      // console.error('From axios', e);
-      // console.log(e.response);
-      // // console.log(e.response.status);
-      // // console.log(e.response.headers);
       if (error.response) {
         // Request made and server responded
         console.log(error.response.data);
@@ -35,31 +29,34 @@ const PlantHistoryListScreen = ({ navigation }) => {
     }
   };
 
+  useEffect(() => {
+    getPredictions();
+  }, []);
   return (
     <View style={[globalStyles.androidSafeArea, styles.plant]}>
       <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={Constants.PLANT_HISTORY_LIST}
+        data={dataSource}
+        extraData={Constants.PLANT_HISTORY_LIST}
         ListHeaderComponent={
           <View>
             <Text style={styles.title}>PLANT IDENTIFICATION</Text>
             <Text style={styles.subTitle}>HISTORY</Text>
           </View>
         }
-        keyExtractor={(item) => item.plantName}
+        keyExtractor={(item) => item.predictedPlantName}
         renderItem={({ item }) => (
           <SinglePlant
-            plantName={item.plantName}
-            photoUrl={item.photoUrl}
-            date={item.date}
+            plantName={item.predictedPlantName}
+            photoUrl={item.photoPath}
+            date={item.timestamp}
             handlePress={() => {
               navigation.navigate('SinglePlantScreen', {
-                plantName: item.plantName,
-                photoUrl: item.photoUrl,
+                plantName: item.predictedPlantName,
+                photoUrl: item.photoPath,
                 goBackAsResetStack: false,
               });
-              predictPhoto(item.plantName, item.photoUrl);
             }}
           />
         )}

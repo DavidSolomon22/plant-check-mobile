@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import stylesGlobal from '../styles/style';
+import { PLANT_PREDICTIONS_ORIGIN } from '@env';
 
 const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
   const boxColor = {
@@ -16,7 +17,10 @@ const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.box, boxColor]}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: photoUrl }} style={styles.image} />
+        <Image
+          source={{ uri: `${PLANT_PREDICTIONS_ORIGIN}/photos/${photoUrl}` }}
+          style={styles.image}
+        />
       </View>
       <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
