@@ -14,7 +14,7 @@ import * as jpeg from 'jpeg-js';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as Constants from '../constants';
-import { createPlantPrediction } from '../api/plant-prediction/';
+import { createPlantPrediction } from '../api/plant-prediction';
 
 const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const [isTfReady, setTfReady] = useState(false);
@@ -29,31 +29,15 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     const prediction = await loadedModel.predict(imgTensor).data();
     const predictedPlantName = getPlantName(prediction);
     setLoading(false);
-    const imageToSave = await resizeImage();
-    const resposne = await createPlantPrediction(
-      imageToSave,
-      predictedPlantName,
-    );
-    console.log(resposne);
+    const plantPhotoLocalUri = await resizeImage();
+    const userId = '5ff22b3e45fc56004c3f7623';
+    await createPlantPrediction(userId, plantPhotoLocalUri, predictedPlantName);
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
-      photoUrl: route.params.photoUrl,
+      photoUrl: route.params.picture.uri,
       goBackAsResetStack: true,
     });
   };
-  // const uploadPhoto = async () => {
-  //   try {
-  //     const response = await createPlantPrediction();
-  //     // predictedPlantName,
-  //     // imageToSave.uri,
-  //     console.log('axios', response);
-  //   } catch (e) {
-  //     console.log(e);
-  //     // console.log(e.response.data);
-  //     // console.log(e.response.status);
-  //     // console.log(e.response.headers);
-  //   }
-  // };
 
   const loadNeuralNetwork = async () => {
     await tf.ready();
@@ -82,7 +66,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
 
   const convertImage = async () => {
     const uriResize = await ImageManipulator.manipulateAsync(
-      route.params.photoUrl,
+      route.params.picture.uri,
       [{ resize: { width: 180, height: 180 } }],
       { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
     );
@@ -96,9 +80,16 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
 
   const resizeImage = async () => {
     const uriResize = await ImageManipulator.manipulateAsync(
-      route.params.photoUrl,
-      [{ resize: { width: 180, height: 180 } }],
-      { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
+      route.params.picture.uri,
+      [
+        {
+          resize: {
+            width: route.params.picture.width,
+            height: route.params.picture.height,
+          },
+        },
+      ],
+      { compress: 1, format: ImageManipulator.SaveFormat.JPEG },
     );
     return uriResize.uri;
   };
@@ -118,13 +109,9 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     navigation.navigate('TakePhotoScreen');
   };
 
-  const handleGoToPrediction = () => {
-    predictPhoto();
-  };
-
   return (
     <ImageBackground
-      source={{ uri: route.params.photoUrl }}
+      source={{ uri: route.params.picture.uri }}
       style={[styles.photoContainer, loading ? styles.photoOpacity : null]}
     >
       <View style={styles.spinner}>
