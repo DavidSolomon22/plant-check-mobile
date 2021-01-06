@@ -34,27 +34,12 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
       imageToSave,
       predictedPlantName,
     );
-    console.log(resposne);
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
       photoUrl: route.params.photoUrl,
       goBackAsResetStack: true,
     });
   };
-  // const uploadPhoto = async () => {
-  //   try {
-  //     const response = await createPlantPrediction();
-  //     // predictedPlantName,
-  //     // imageToSave.uri,
-  //     console.log('axios', response);
-  //   } catch (e) {
-  //     console.log(e);
-  //     // console.log(e.response.data);
-  //     // console.log(e.response.status);
-  //     // console.log(e.response.headers);
-  //   }
-  // };
-
   const loadNeuralNetwork = async () => {
     await tf.ready();
     setTfReady(true);
