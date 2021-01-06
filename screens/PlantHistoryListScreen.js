@@ -60,41 +60,44 @@ const PlantHistoryListScreen = ({ navigation }) => {
     >
       <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
 
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={dataSource}
-        extraData={Constants.PLANT_HISTORY_LIST}
-        ListHeaderComponent={
-          <View>
-            <Text style={styles.title}>PLANT IDENTIFICATION</Text>
-            <Text style={styles.subTitle}>HISTORY</Text>
-            <ActivityIndicator
-              style={styles.spinner}
-              animating={loading}
-              size="large"
-              color="black"
+      {loading ? (
+        <ActivityIndicator
+          style={styles.spinner}
+          animating={loading}
+          size="large"
+          color="black"
+        />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={dataSource}
+          extraData={Constants.PLANT_HISTORY_LIST}
+          ListHeaderComponent={
+            <View>
+              <Text style={styles.title}>PLANT IDENTIFICATION</Text>
+              <Text style={styles.subTitle}>HISTORY</Text>
+            </View>
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          keyExtractor={(item) => item.predictedPlantName}
+          renderItem={({ item }) => (
+            <SinglePlant
+              plantName={item.predictedPlantName}
+              photoUrl={item.photoPath}
+              date={Moment(item.timestamp).format('DD/MM/YYYY, h:mm:ss a')}
+              handlePress={() => {
+                navigation.navigate('SinglePlantScreen', {
+                  plantName: item.predictedPlantName,
+                  photoUrl: item.photoPath,
+                  goBackAsResetStack: false,
+                });
+              }}
             />
-          </View>
-        }
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        keyExtractor={(item) => item.predictedPlantName}
-        renderItem={({ item }) => (
-          <SinglePlant
-            plantName={item.predictedPlantName}
-            photoUrl={item.photoPath}
-            date={Moment(item.timestamp).format('DD/MM/YYYY, h:mm:ss a')}
-            handlePress={() => {
-              navigation.navigate('SinglePlantScreen', {
-                plantName: item.predictedPlantName,
-                photoUrl: item.photoPath,
-                goBackAsResetStack: false,
-              });
-            }}
-          />
-        )}
-      />
+          )}
+        />
+      )}
     </View>
   );
 };
