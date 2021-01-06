@@ -125,6 +125,32 @@ const BottomTabScreen = () => {
   );
 };
 
+const LoginRegisterNavigator = () => {
+  return (
+    <LoginRegisterStack.Navigator
+      initialRouteName="LoginScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <LoginRegisterStack.Screen
+        name="LoginScreen"
+        component={LoginRegisterScreen}
+        initialParams={{ isItLogin: true }}
+        options={{
+          animationEnabled: false,
+        }}
+      />
+      <LoginRegisterStack.Screen
+        name="RegisterScreen"
+        component={LoginRegisterScreen}
+        initialParams={{ isItLogin: false }}
+        options={{
+          animationEnabled: false,
+        }}
+      />
+    </LoginRegisterStack.Navigator>
+  );
+};
+
 const Navigation = () => {
   const initialLoginState = {
     isLoading: true,
@@ -151,8 +177,8 @@ const Navigation = () => {
       case 'REGISTER':
         return {
           ...prevState,
-          userName: action.id,
-          userToken: action.token,
+          userName: null,
+          userToken: null,
           isLoading: false,
         };
       case 'RETRIEVE_TOKEN':
@@ -203,7 +229,24 @@ const Navigation = () => {
           dispatch({ type: 'LOGOUT' });
         } catch (error) {}
       },
-      signUp: async (userName, password) => {},
+      signUp: async (userName, password, redirectToLoginRegister) => {
+        try {
+          const response = await registerUser(userName, password);
+
+          if (response.status === 201) {
+            redirectToLoginRegister();
+            dispatch({ type: 'REGISTER' });
+          }
+        } catch (error) {
+          // when user exists code 400 is catched in here
+          // display toast ??
+
+          console.log('my error', error);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      },
     }),
     [],
   );
@@ -235,27 +278,7 @@ const Navigation = () => {
         {loginState.userToken !== null ? (
           <BottomTabScreen />
         ) : (
-          <LoginRegisterStack.Navigator
-            initialRouteName="LoginScreen"
-            screenOptions={{ headerShown: false }}
-          >
-            <LoginRegisterStack.Screen
-              name="LoginScreen"
-              component={LoginRegisterScreen}
-              initialParams={{ isItLogin: true }}
-              options={{
-                animationEnabled: false,
-              }}
-            />
-            <LoginRegisterStack.Screen
-              name="RegisterScreen"
-              component={LoginRegisterScreen}
-              initialParams={{ isItLogin: false }}
-              options={{
-                animationEnabled: false,
-              }}
-            />
-          </LoginRegisterStack.Navigator>
+          <LoginRegisterNavigator />
         )}
       </NavigationContainer>
     </AuthContext.Provider>

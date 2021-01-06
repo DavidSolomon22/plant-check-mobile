@@ -69,10 +69,9 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
         isItLogin ? loginFormValidationScheme : registerFormValidationScheme
       }
       onSubmit={async (values, actions) => {
-        // isItLogin ? handleLogin(values) : handleRegistration(values);
         isItLogin
           ? signIn(values.email, values.password)
-          : signUp(values.email, values.password);
+          : signUp(values.email, values.password, redirectToLoginRegister);
         actions.resetForm();
       }}
     >
