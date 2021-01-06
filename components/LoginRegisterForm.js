@@ -65,8 +65,8 @@ const handleLogin = async (formValues) => {
       response.data.refresh_token,
     );
     const accessToken = await SecureStore.getItemAsync('access_token');
-    console.log('accessToken', accessToken);
-    console.log('response', response.data);
+    console.log('accessTokenFROM LOGIN', accessToken);
+    console.log('responseFROM LOGIN', response.data);
   } catch (error) {
     console.log('my error', error);
     console.log(error.response.data);

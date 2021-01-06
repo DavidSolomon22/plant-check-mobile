@@ -9,7 +9,7 @@ export const registerUser = async (email, password) => {
   //   console.log(error.response.status);
   //   console.log(error.response.headers);
   // }
-  const url = `${AUTH_ORIGIN}auth/register`;
+  const url = `${AUTH_ORIGIN}/auth/register`;
   const body = { email, password };
   console.log('URL', url);
   return axios.post(url, body);
@@ -22,7 +22,7 @@ export const loginUser = (email, password) => {
   //   console.log(error.response.status);
   //   console.log(error.response.headers);
   // }
-  const url = `${AUTH_ORIGIN}auth/login`;
+  const url = `${AUTH_ORIGIN}/auth/login`;
   const body = { email, password };
   console.log('URL', url);
   return axios.post(url, body);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +13,11 @@ import TakePhotoScreen from '../screens/TakePhotoScreen';
 import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import LoginRegisterScreen from '../screens/LoginRegisterScreen';
+import { determineWhichScreenToDisplay } from '../utilities/NavigationUtilities';
+import * as SecureStore from 'expo-secure-store';
+import { ImageBackground } from 'react-native';
+
+const LoginRegisterAndBottomTabStack = createStackNavigator();
 
 const BottomTab = createBottomTabNavigator();
 
@@ -75,48 +80,93 @@ const UserProfileStackScreen = () => {
   );
 };
 
+const BottomTabScreen = () => {
+  return (
+    <BottomTab.Navigator
+      initialRouteName="HomeStackTab"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let tabIcon;
+          if (route.name === 'PlantHistoryListStackTab') {
+            tabIcon = focused ? (
+              <PlantHistoryIcon color="#499D32" />
+            ) : (
+              <PlantHistoryIcon color="#000" />
+            );
+          } else if (route.name === 'HomeStackTab') {
+            tabIcon = focused ? (
+              <PlantIcon color="#499D32" />
+            ) : (
+              <PlantIcon color="#000" />
+            );
+          } else {
+            tabIcon = focused ? (
+              <ProfileIcon color="#499D32" />
+            ) : (
+              <ProfileIcon color="#000" />
+            );
+          }
+          return tabIcon;
+        },
+      })}
+      tabBarOptions={{ showLabel: false, keyboardHidesTabBar: true }}
+    >
+      <BottomTab.Screen
+        name="PlantHistoryListStackTab"
+        component={PlantHistoryListStackScreen}
+      />
+      <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
+      <BottomTab.Screen
+        name="UserProfileTab"
+        component={UserProfileStackScreen}
+      />
+    </BottomTab.Navigator>
+  );
+};
+
 const Navigation = () => {
+  const [areTokensAvailable, setAreTokensAvailable] = useState('');
+
+  const innerFunction = useCallback(async () => {
+    const token = await SecureStore.getItemAsync('access_token');
+    console.log('TOKEN', token);
+    if (token) {
+      setAreTokensAvailable(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    innerFunction();
+  }, []);
+
+  if (areTokensAvailable === '') {
+    return (
+      <ImageBackground
+        source={require('../assets/images/splash.png')}
+        style={{ flex: 1 }}
+      />
+    );
+  }
+
   return (
     <NavigationContainer>
-      <BottomTab.Navigator
-        initialRouteName="HomeStackTab"
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let tabIcon;
-            if (route.name === 'PlantHistoryListStackTab') {
-              tabIcon = focused ? (
-                <PlantHistoryIcon color="#499D32" />
-              ) : (
-                <PlantHistoryIcon color="#000" />
-              );
-            } else if (route.name === 'HomeStackTab') {
-              tabIcon = focused ? (
-                <PlantIcon color="#499D32" />
-              ) : (
-                <PlantIcon color="#000" />
-              );
-            } else {
-              tabIcon = focused ? (
-                <ProfileIcon color="#499D32" />
-              ) : (
-                <ProfileIcon color="#000" />
-              );
-            }
-            return tabIcon;
-          },
-        })}
-        tabBarOptions={{ showLabel: false, keyboardHidesTabBar: true }}
+      <LoginRegisterAndBottomTabStack.Navigator
+        initialRouteName="LoginRegisterScreen"
+        screenOptions={{ headerShown: false }}
       >
-        <BottomTab.Screen
-          name="PlantHistoryListStackTab"
-          component={PlantHistoryListStackScreen}
-        />
-        <BottomTab.Screen name="HomeStackTab" component={HomeStackScreen} />
-        <BottomTab.Screen
-          name="UserProfileTab"
-          component={UserProfileStackScreen}
-        />
-      </BottomTab.Navigator>
+        {areTokensAvailable ? (
+          <LoginRegisterAndBottomTabStack.Screen
+            name="BottomTabScreen"
+            component={BottomTabScreen}
+          />
+        ) : (
+          <LoginRegisterAndBottomTabStack.Screen
+            name="LoginRegisterScreen"
+            component={LoginRegisterScreen}
+            initialParams={{ isItLogin: true }}
+          />
+        )}
+      </LoginRegisterAndBottomTabStack.Navigator>
     </NavigationContainer>
   );
 };
