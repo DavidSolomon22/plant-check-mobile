@@ -14,6 +14,7 @@ import * as jpeg from 'jpeg-js';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as Constants from '../constants';
+import { createPlantPrediction } from '../api/plant-prediction';
 
 const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const [isTfReady, setTfReady] = useState(false);
@@ -27,12 +28,17 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     const imgTensor = imgToTensor(raw);
     const prediction = await loadedModel.predict(imgTensor).data();
     const predictedPlantName = getPlantName(prediction);
-    setLoading(false);
+    const plantPhotoLocalUri = await resizeImage();
+    const response = await createPlantPrediction(
+      plantPhotoLocalUri,
+      predictedPlantName,
+    );
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
-      photoUrl: route.params.photoUrl,
+      photoUrl: JSON.parse(response.body).photoPath,
       goBackAsResetStack: true,
     });
+    setLoading(false);
   };
 
   const loadNeuralNetwork = async () => {
@@ -62,7 +68,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
 
   const convertImage = async () => {
     const uriResize = await ImageManipulator.manipulateAsync(
-      route.params.photoUrl,
+      route.params.picture.uri,
       [{ resize: { width: 180, height: 180 } }],
       { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
     );
@@ -72,6 +78,22 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
     const raw = new Uint8Array(imgBuffer);
     return raw;
+  };
+
+  const resizeImage = async () => {
+    const uriResize = await ImageManipulator.manipulateAsync(
+      route.params.picture.uri,
+      [
+        {
+          resize: {
+            width: route.params.picture.width,
+            height: route.params.picture.height,
+          },
+        },
+      ],
+      { compress: 0.2, format: ImageManipulator.SaveFormat.JPEG },
+    );
+    return uriResize.uri;
   };
 
   const getPlantName = (prediction) => {
@@ -89,13 +111,9 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     navigation.navigate('TakePhotoScreen');
   };
 
-  const handleGoToPrediction = () => {
-    predictPhoto();
-  };
-
   return (
     <ImageBackground
-      source={{ uri: route.params.photoUrl }}
+      source={{ uri: route.params.picture.uri }}
       style={[styles.photoContainer, loading ? styles.photoOpacity : null]}
     >
       <View style={styles.spinner}>
@@ -105,7 +123,11 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
         <Text style={[styles.text, stylesGlobal.font]}>Retake</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleGoToPrediction}>
+      <TouchableOpacity
+        onPress={async () => {
+          await predictPhoto();
+        }}
+      >
         <Text style={[styles.text, stylesGlobal.font]}>Predict</Text>
       </TouchableOpacity>
     </ImageBackground>

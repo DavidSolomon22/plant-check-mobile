@@ -7,9 +7,12 @@ import * as Constants from '../constants';
 import GoBackIcon from '../components/icons/GoBackIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import StatusBarCustom from '../components/StatusBarCustom';
+import { PLANT_PREDICTIONS_ORIGIN } from '@env';
 
 const SinglePlantScreen = (props) => {
   const { route, navigation } = props;
+  console.log('route :>> ', route);
+  console.log('navigation :>> ', navigation);
   return (
     <View style={styles.container}>
       <StatusBarCustom bgColor={Colors.green} barStyle="light" />
@@ -32,9 +35,12 @@ const SinglePlantScreen = (props) => {
             <Image
               style={styles.image}
               source={{
-                uri: route.params.photoUrl,
+                uri: `${PLANT_PREDICTIONS_ORIGIN}/photos/${route.params.photoUrl}`,
               }}
             />
+            {console.log(
+              `${PLANT_PREDICTIONS_ORIGIN}/photos/${route.params.photoUrl}`,
+            )}
           </View>
 
           <View style={styles.detailsTextContainer}>

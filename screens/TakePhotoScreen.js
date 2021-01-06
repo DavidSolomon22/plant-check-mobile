@@ -7,23 +7,22 @@ const TakePhotoScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-
-  const [photoUri, setPhotoUri] = useState(null);
+  const [picture, setPicture] = useState(null);
 
   const handleTakePhoto = async () => {
     if (cameraRef) {
-      const { uri } = await cameraRef.takePictureAsync();
-      setPhotoUri(uri);
+      const takenPicture = await cameraRef.takePictureAsync();
+      setPicture(takenPicture);
     }
   };
 
   useEffect(() => {
-    if (photoUri !== null) {
+    if (picture) {
       navigation.navigate('DisplayTakenPhotoScreen', {
-        photoUrl: photoUri,
+        picture: picture,
       });
     }
-  }, [photoUri]);
+  }, [picture]);
 
   useEffect(() => {
     (async () => {
