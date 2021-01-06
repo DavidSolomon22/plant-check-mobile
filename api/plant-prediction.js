@@ -1,5 +1,5 @@
 import { PLANT_PREDICTIONS_ORIGIN } from '@env';
-import FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system';
 
 export const createPlantPrediction = async (
   userId,
