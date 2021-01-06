@@ -81,7 +81,7 @@ const PlantHistoryListScreen = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          keyExtractor={(item) => item.predictedPlantName}
+          keyExtractor={(item, index) => index}
           renderItem={({ item }) => (
             <SinglePlant
               plantName={item.predictedPlantName}
