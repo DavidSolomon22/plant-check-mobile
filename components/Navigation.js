@@ -211,6 +211,7 @@ const Navigation = () => {
               'refresh_token',
               response.data.refresh_token,
             );
+            await SecureStore.setItemAsync('userId', response.data.userId);
             dispatch({
               type: 'LOGIN',
               id: userName,
