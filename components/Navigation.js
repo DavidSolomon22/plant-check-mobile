@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,11 +13,12 @@ import TakePhotoScreen from '../screens/TakePhotoScreen';
 import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import LoginRegisterScreen from '../screens/LoginRegisterScreen';
-import { determineWhichScreenToDisplay } from '../utilities/NavigationUtilities';
 import * as SecureStore from 'expo-secure-store';
 import { ImageBackground } from 'react-native';
+import { AuthContext } from '../utilities/NavigationUtilities';
+import { loginUser, registerUser } from '../api/AuthAPI';
 
-const LoginRegisterAndBottomTabStack = createStackNavigator();
+const LoginRegisterStack = createStackNavigator();
 
 const BottomTab = createBottomTabNavigator();
 
@@ -125,21 +126,101 @@ const BottomTabScreen = () => {
 };
 
 const Navigation = () => {
-  const [areTokensAvailable, setAreTokensAvailable] = useState('');
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null,
+  };
 
-  const innerFunction = useCallback(async () => {
-    const token = await SecureStore.getItemAsync('access_token');
-    console.log('TOKEN', token);
-    if (token) {
-      setAreTokensAvailable(true);
+  const loginReducer = (prevState, action) => {
+    switch (action.type) {
+      case 'LOGIN':
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGOUT':
+        return {
+          ...prevState,
+          userName: null,
+          userToken: null,
+          isLoading: false,
+        };
+      case 'REGISTER':
+        return {
+          ...prevState,
+          userName: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'RETRIEVE_TOKEN':
+        return {
+          ...prevState,
+          userToken: action.token,
+          isLoading: false,
+        };
     }
-  }, []);
+  };
+
+  const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
+
+  const authContext = useMemo(
+    () => ({
+      signIn: async (userName, password) => {
+        try {
+          let userToken;
+          userToken = null;
+          const response = await loginUser(userName, password);
+
+          if (response.status === 201) {
+            userToken = response.data.access_token;
+            await SecureStore.setItemAsync(
+              'access_token',
+              response.data.access_token,
+            );
+            await SecureStore.setItemAsync(
+              'refresh_token',
+              response.data.refresh_token,
+            );
+            dispatch({
+              type: 'LOGIN',
+              id: userName,
+              token: userToken,
+            });
+          }
+        } catch (error) {
+          console.log('my error', error);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      },
+      signOut: async () => {
+        try {
+          await SecureStore.deleteItemAsync('access_token');
+          dispatch({ type: 'LOGOUT' });
+        } catch (error) {}
+      },
+      signUp: async (userName, password) => {},
+    }),
+    [],
+  );
 
   useEffect(() => {
-    innerFunction();
+    setTimeout(async () => {
+      let userToken;
+      userToken = null;
+      try {
+        userToken = await SecureStore.getItemAsync('access_token');
+
+        dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
+      } catch (error) {}
+    }, 2000);
   }, []);
 
-  if (areTokensAvailable === '') {
+  if (loginState.isLoading) {
     return (
       <ImageBackground
         source={require('../assets/images/splash.png')}
@@ -149,25 +230,35 @@ const Navigation = () => {
   }
 
   return (
-    <NavigationContainer>
-      <LoginRegisterAndBottomTabStack.Navigator
-        initialRouteName="LoginRegisterScreen"
-        screenOptions={{ headerShown: false }}
-      >
-        {areTokensAvailable ? (
-          <LoginRegisterAndBottomTabStack.Screen
-            name="BottomTabScreen"
-            component={BottomTabScreen}
-          />
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {loginState.userToken !== null ? (
+          <BottomTabScreen />
         ) : (
-          <LoginRegisterAndBottomTabStack.Screen
-            name="LoginRegisterScreen"
-            component={LoginRegisterScreen}
-            initialParams={{ isItLogin: true }}
-          />
+          <LoginRegisterStack.Navigator
+            initialRouteName="LoginScreen"
+            screenOptions={{ headerShown: false }}
+          >
+            <LoginRegisterStack.Screen
+              name="LoginScreen"
+              component={LoginRegisterScreen}
+              initialParams={{ isItLogin: true }}
+              options={{
+                animationEnabled: false,
+              }}
+            />
+            <LoginRegisterStack.Screen
+              name="RegisterScreen"
+              component={LoginRegisterScreen}
+              initialParams={{ isItLogin: false }}
+              options={{
+                animationEnabled: false,
+              }}
+            />
+          </LoginRegisterStack.Navigator>
         )}
-      </LoginRegisterAndBottomTabStack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 };
 

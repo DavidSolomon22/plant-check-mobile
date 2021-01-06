@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { AuthContext } from '../utilities/NavigationUtilities';
 
 const UserProfileScreen = ({ navigation }) => {
   const goToLoginPage = () => {
     navigation.navigate('LoginRegisterScreen', { isItLogin: false });
   };
 
+  const { signOut } = useContext(AuthContext);
+
   return (
     <View style={[{ flex: 1 }, { justifyContent: 'center' }]}>
-      <TouchableOpacity onPress={goToLoginPage}>
-        <Text>Go to login page</Text>
+      <TouchableOpacity onPress={signOut}>
+        <Text>Wyloguj sie</Text>
       </TouchableOpacity>
     </View>
   );

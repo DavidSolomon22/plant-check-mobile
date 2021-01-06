@@ -10,9 +10,9 @@ const LoginRegisterScreen = ({ route, navigation }) => {
 
   const redirectToLoginRegister = () => {
     if (isItLogin) {
-      navigation.navigate('LoginRegisterScreen', { isItLogin: false });
+      navigation.navigate('RegisterScreen');
     } else {
-      navigation.navigate('LoginRegisterScreen', { isItLogin: true });
+      navigation.navigate('LoginScreen');
     }
   };
 

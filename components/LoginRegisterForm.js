@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import { registerUser, loginUser } from '../api/AuthAPI';
 import * as SecureStore from 'expo-secure-store';
+import { AuthContext } from '../utilities/NavigationUtilities';
 
 // validation schemes
 
@@ -54,28 +55,9 @@ const handleRegistration = async (formValues) => {
   }
 };
 
-const handleLogin = async (formValues) => {
-  try {
-    console.log('VALUES', formValues);
-    console.log('handleLogin');
-    const response = await loginUser(formValues.email, formValues.password);
-    await SecureStore.setItemAsync('access_token', response.data.access_token);
-    await SecureStore.setItemAsync(
-      'refresh_token',
-      response.data.refresh_token,
-    );
-    const accessToken = await SecureStore.getItemAsync('access_token');
-    console.log('accessTokenFROM LOGIN', accessToken);
-    console.log('responseFROM LOGIN', response.data);
-  } catch (error) {
-    console.log('my error', error);
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
-  }
-};
-
 const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
+  const { signIn, signUp } = useContext(AuthContext);
+
   return (
     <Formik
       initialValues={
@@ -87,7 +69,10 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
         isItLogin ? loginFormValidationScheme : registerFormValidationScheme
       }
       onSubmit={async (values, actions) => {
-        isItLogin ? handleLogin(values) : handleRegistration(values);
+        // isItLogin ? handleLogin(values) : handleRegistration(values);
+        isItLogin
+          ? signIn(values.email, values.password)
+          : signUp(values.email, values.password);
         actions.resetForm();
       }}
     >
