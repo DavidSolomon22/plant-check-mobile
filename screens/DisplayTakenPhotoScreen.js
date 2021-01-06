@@ -30,11 +30,13 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
     const predictedPlantName = getPlantName(prediction);
     setLoading(false);
     const plantPhotoLocalUri = await resizeImage();
-    const userId = '5ff22b3e45fc56004c3f7623';
-    await createPlantPrediction(userId, plantPhotoLocalUri, predictedPlantName);
+    const response = await createPlantPrediction(
+      plantPhotoLocalUri,
+      predictedPlantName,
+    );
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
-      photoUrl: route.params.picture.uri,
+      photoUrl: JSON.parse(response.body).photoPath,
       goBackAsResetStack: true,
     });
   };

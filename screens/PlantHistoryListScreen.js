@@ -1,25 +1,33 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from 'react-native';
 import SinglePlant from '../components/SinglePlant';
 import globalStyles from '../styles/style';
 import StatusBarCustom from '../components/StatusBarCustom';
 import { Colors } from '../styles';
 import * as Constants from '../constants';
-import { createPlantPrediction } from '../api/plant-prediction/';
+import { getUserPlantPredictions } from '../api/plant-prediction/';
+import Moment from 'moment';
 
 const PlantHistoryListScreen = ({ navigation }) => {
-  const predictPhoto = async (predictedPlantName, imageToSave) => {
+  const [dataSource, setDataSource] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const getPredictions = async () => {
     try {
-      const response = await createPlantPrediction(
-        predictedPlantName,
-        imageToSave,
-      );
-      console.log('axios', response);
+      setLoading(true);
+      const response = await getUserPlantPredictions();
+      setDataSource(response.data.predictions);
+      setLoading(false);
     } catch (error) {
-      // console.error('From axios', e);
-      // console.log(e.response);
-      // // console.log(e.response.status);
-      // // console.log(e.response.headers);
+      setLoading(false);
+      setDataSource(null);
       if (error.response) {
         // Request made and server responded
         console.log(error.response.data);
@@ -34,36 +42,63 @@ const PlantHistoryListScreen = ({ navigation }) => {
       }
     }
   };
+  const onRefresh = async () => {
+    setRefreshing(true);
+    getPredictions();
+    setRefreshing(false);
+  };
 
+  useEffect(() => {
+    getPredictions();
+  }, []);
   return (
-    <View style={[globalStyles.androidSafeArea, styles.plant]}>
+    <View
+      style={[
+        globalStyles.androidSafeArea,
+        loading == false ? styles.plant : styles.withOpacity,
+      ]}
+    >
       <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={Constants.PLANT_HISTORY_LIST}
-        ListHeaderComponent={
-          <View>
-            <Text style={styles.title}>PLANT IDENTIFICATION</Text>
-            <Text style={styles.subTitle}>HISTORY</Text>
-          </View>
-        }
-        keyExtractor={(item) => item.plantName}
-        renderItem={({ item }) => (
-          <SinglePlant
-            plantName={item.plantName}
-            photoUrl={item.photoUrl}
-            date={item.date}
-            handlePress={() => {
-              navigation.navigate('SinglePlantScreen', {
-                plantName: item.plantName,
-                photoUrl: item.photoUrl,
-                goBackAsResetStack: false,
-              });
-              predictPhoto(item.plantName, item.photoUrl);
-            }}
-          />
-        )}
-      />
+
+      {loading ? (
+        <ActivityIndicator
+          style={styles.spinner}
+          animating={loading}
+          size="large"
+          color="black"
+        />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={dataSource}
+          extraData={Constants.PLANT_HISTORY_LIST}
+          ListHeaderComponent={
+            <View>
+              <Text style={styles.title}>PLANT IDENTIFICATION</Text>
+              <Text style={styles.subTitle}>HISTORY</Text>
+            </View>
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          keyExtractor={(item) => item.predictedPlantName}
+          renderItem={({ item }) => (
+            <SinglePlant
+              plantName={item.predictedPlantName}
+              photoUrl={item.photoPath}
+              date={Moment(item.timestamp).format('DD/MM/YYYY, h:mm:ss a')}
+              handlePress={() => {
+                console.log(item.photoPath);
+                navigation.navigate('SinglePlantScreen', {
+                  plantName: item.predictedPlantName,
+                  photoUrl: item.photoPath,
+                  goBackAsResetStack: false,
+                });
+              }}
+            />
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -84,6 +119,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.white,
     flex: 1,
+  },
+  withOpacity: {
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    flex: 1,
+    opacity: 0.4,
+  },
+  spinner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
