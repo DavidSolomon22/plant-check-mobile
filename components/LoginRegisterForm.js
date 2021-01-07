@@ -13,7 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as yup from 'yup';
 import { registerUser, loginUser } from '../api/AuthAPI';
 import * as SecureStore from 'expo-secure-store';
-import { AuthContext } from '../utilities/NavigationUtilities';
+import { AuthContext } from '../utilities/AuthUtilities';
 
 // validation schemes
 

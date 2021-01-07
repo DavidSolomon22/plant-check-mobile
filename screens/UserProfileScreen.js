@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { AuthContext } from '../utilities/NavigationUtilities';
+import { AuthContext } from '../utilities/AuthUtilities';
 
 const UserProfileScreen = ({ navigation }) => {
   const goToLoginPage = () => {

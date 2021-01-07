@@ -15,8 +15,8 @@ import DetailsScreen from '../screens/DetailsScreen';
 import LoginRegisterScreen from '../screens/LoginRegisterScreen';
 import * as SecureStore from 'expo-secure-store';
 import { ImageBackground } from 'react-native';
-import { AuthContext } from '../utilities/NavigationUtilities';
-import { loginUser, registerUser } from '../api/AuthAPI';
+import { AuthContext } from '../utilities/AuthUtilities';
+import { signIn, signOut, signUp } from '../utilities/AuthUtilities';
 
 const LoginRegisterStack = createStackNavigator();
 
@@ -196,58 +196,13 @@ const Navigation = () => {
   const authContext = useMemo(
     () => ({
       signIn: async (userName, password) => {
-        try {
-          let userToken;
-          userToken = null;
-          const response = await loginUser(userName, password);
-
-          if (response.status === 201) {
-            userToken = response.data.access_token;
-            await SecureStore.setItemAsync(
-              'access_token',
-              response.data.access_token,
-            );
-            await SecureStore.setItemAsync(
-              'refresh_token',
-              response.data.refresh_token,
-            );
-            await SecureStore.setItemAsync('userId', response.data.userId);
-            dispatch({
-              type: 'LOGIN',
-              id: userName,
-              token: userToken,
-            });
-          }
-        } catch (error) {
-          console.log('my error', error);
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
+        signIn(userName, password, dispatch);
       },
       signOut: async () => {
-        try {
-          await SecureStore.deleteItemAsync('access_token');
-          dispatch({ type: 'LOGOUT' });
-        } catch (error) {}
+        signOut(dispatch);
       },
       signUp: async (userName, password, redirectToLoginRegister) => {
-        try {
-          const response = await registerUser(userName, password);
-
-          if (response.status === 201) {
-            redirectToLoginRegister();
-            dispatch({ type: 'REGISTER' });
-          }
-        } catch (error) {
-          // when user exists code 400 is catched in here
-          // display toast ??
-
-          console.log('my error', error);
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        }
+        signUp(userName, password, redirectToLoginRegister, dispatch);
       },
     }),
     [],

@@ -12,7 +12,7 @@ import globalStyles from '../styles/style';
 import StatusBarCustom from '../components/StatusBarCustom';
 import { Colors } from '../styles';
 import * as Constants from '../constants';
-import { getUserPlantPredictions } from '../api/plant-prediction/';
+import { getUserPlantPredictions } from '../api//PlantPredictionAPI';
 import Moment from 'moment';
 
 const PlantHistoryListScreen = ({ navigation }) => {

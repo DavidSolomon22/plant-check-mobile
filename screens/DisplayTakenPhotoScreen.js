@@ -14,7 +14,7 @@ import * as jpeg from 'jpeg-js';
 import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as Constants from '../constants';
-import { createPlantPrediction } from '../api/plant-prediction';
+import { createPlantPrediction } from '../api/PlantPredictionAPI';
 
 const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const [isTfReady, setTfReady] = useState(false);
