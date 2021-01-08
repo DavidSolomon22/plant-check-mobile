@@ -17,6 +17,10 @@ import * as SecureStore from 'expo-secure-store';
 import { ImageBackground } from 'react-native';
 import { AuthContext } from '../utilities/AuthUtilities';
 import { signIn, signOut, signUp } from '../utilities/AuthUtilities';
+import {
+  requestInterceptor,
+  responseInterceptor,
+} from '../utilities/Interceptors';
 
 const LoginRegisterStack = createStackNavigator();
 
@@ -218,6 +222,11 @@ const Navigation = () => {
         dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
       } catch (error) {}
     }, 2000);
+  }, []);
+
+  useEffect(() => {
+    requestInterceptor();
+    responseInterceptor(dispatch);
   }, []);
 
   if (loginState.isLoading) {

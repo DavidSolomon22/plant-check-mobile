@@ -1,7 +1,8 @@
-import { PLANT_PREDICTIONS_ORIGIN } from '@env';
+import { GATEWAY_ORIGIN } from '@env';
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { axiosInstance } from '../utilities/Interceptors';
 
 export const createPlantPrediction = async (
   plantPhotoLocalUri,
@@ -9,7 +10,8 @@ export const createPlantPrediction = async (
 ) => {
   try {
     const userId = await SecureStore.getItemAsync('userId');
-    const url = `${PLANT_PREDICTIONS_ORIGIN}/users/${userId}/plants-predictions`;
+    const url = `${GATEWAY_ORIGIN}/users/${userId}/plants-predictions`;
+    console.log('PLANTY URL', url);
     return await FileSystem.uploadAsync(url, plantPhotoLocalUri, {
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       fieldName: 'plantPhoto',
@@ -33,9 +35,10 @@ export const createPlantPrediction = async (
 export const getUserPlantPredictions = async () => {
   try {
     const userId = await SecureStore.getItemAsync('userId');
-    const url = `${PLANT_PREDICTIONS_ORIGIN}/users/${userId}/plants-predictions`;
+    const url = `${GATEWAY_ORIGIN}/users/${userId}/plants-predictions`;
+    console.log('PLANTY URL', url);
 
-    return await axios.get(url);
+    return await axiosInstance.get(url);
   } catch (error) {
     if (error.response) {
       // Request made and server responded

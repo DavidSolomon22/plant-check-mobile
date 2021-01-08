@@ -13,3 +13,10 @@ export const loginUser = (email, password) => {
   console.log('URL', url);
   return axios.post(url, body);
 };
+
+export const refreshToken = (access_token, refresh_token) => {
+  const url = `${AUTH_ORIGIN}/auth/refresh-token`;
+  const body = { access_token, refresh_token };
+  console.log('URL', url);
+  return axios.post(url, body);
+};
