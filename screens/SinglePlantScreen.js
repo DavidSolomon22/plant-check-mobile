@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
@@ -8,11 +8,36 @@ import GoBackIcon from '../components/icons/GoBackIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import StatusBarCustom from '../components/StatusBarCustom';
 import { PLANT_PREDICTIONS_ORIGIN } from '@env';
+import { getPlantOverview } from '../api/PlantInfoAPI';
+import { set } from 'react-native-reanimated';
 
 const SinglePlantScreen = (props) => {
   const { route, navigation } = props;
+  const [overViewData, setoverViewData] = useState();
   console.log('route :>> ', route);
   console.log('navigation :>> ', navigation);
+  const getOverview = async () => {
+    try {
+      const response = await getPlantOverview(route.params.plantName);
+      setoverViewData(response.data);
+    } catch (error) {
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+    }
+  };
+  useEffect(() => {
+    getOverview();
+  }, []);
   return (
     <View style={styles.container}>
       <StatusBarCustom bgColor={Colors.green} barStyle="light" />
@@ -61,25 +86,41 @@ const SinglePlantScreen = (props) => {
         <Text style={styles.overviewText}>OVERVIEW</Text>
         <View style={styles.iconsContainer}>
           <View style={styles.rowIconContainer}>
-            <FlatList
-              data={[Constants.ICON_NAMES.SUN, Constants.ICON_NAMES.RAIN_DROP]}
+            {/* <FlatList
+              data={[overViewData.sun, overViewData.water]}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
-                <OverviewItem iconName={item} iconStatus="JACEK " />
+                <OverviewItem iconName={item} iconStatus={item} />
               )}
               contentContainerStyle={styles.rowIconContainer}
               scrollEnabled={false}
+            /> */}
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.SUN}
+              iconStatus={overViewData?.sun || 'No data'}
+            />
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.RAIN_DROP}
+              iconStatus={overViewData?.water || 'No data'}
             />
           </View>
           <View style={styles.rowIconContainer}>
-            <FlatList
+            {/* <FlatList
               data={[Constants.ICON_NAMES.POT, Constants.ICON_NAMES.FERTALIZER]}
               keyExtractor={(item) => item}
               renderItem={({ item }) => (
-                <OverviewItem iconName={item} iconStatus="FILIP" />
+                <OverviewItem iconName={item} iconStatus="IRRIGATING " />
               )}
               contentContainerStyle={styles.rowIconContainer}
               scrollEnabled={false}
+            /> */}
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.POT}
+              iconStatus={overViewData?.potSize || 'No data'}
+            />
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.FERTALIZER}
+              iconStatus={overViewData?.fertalizer || 'No data'}
             />
           </View>
         </View>
@@ -170,7 +211,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 50,
   },
 });
 

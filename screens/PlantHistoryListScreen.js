@@ -23,6 +23,7 @@ const PlantHistoryListScreen = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await getUserPlantPredictions();
+      console.log(response);
       setDataSource(response.data.predictions);
       setLoading(false);
     } catch (error) {
