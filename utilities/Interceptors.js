@@ -61,6 +61,7 @@ export const responseInterceptor = (dispatch) => {
           await SecureStore.deleteItemAsync('refresh_token');
           await SecureStore.deleteItemAsync('userId');
           dispatch({ type: 'LOGOUT' });
+          return error;
         }
       }
 

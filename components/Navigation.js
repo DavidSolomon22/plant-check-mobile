@@ -20,6 +20,7 @@ import { signIn, signOut, signUp } from '../utilities/AuthUtilities';
 import {
   requestInterceptor,
   responseInterceptor,
+  axiosInstance,
 } from '../utilities/Interceptors';
 
 const LoginRegisterStack = createStackNavigator();
@@ -221,12 +222,17 @@ const Navigation = () => {
 
         dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
       } catch (error) {}
-    }, 2000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
-    requestInterceptor();
-    responseInterceptor(dispatch);
+    const request = requestInterceptor();
+    const response = responseInterceptor(dispatch);
+
+    return () => {
+      axiosInstance.interceptors.request.eject(request);
+      axiosInstance.interceptors.request.eject(response);
+    };
   }, []);
 
   if (loginState.isLoading) {
