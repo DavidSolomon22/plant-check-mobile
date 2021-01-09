@@ -8,17 +8,32 @@ import {
   Platform,
 } from 'react-native';
 import stylesGlobal from '../styles/style';
-import { PLANT_PREDICTIONS_ORIGIN } from '@env';
+import { GATEWAY_ORIGIN, INTERCEPTOR_HOST } from '@env';
+import * as SecureStore from 'expo-secure-store';
 
 const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
   const boxColor = {
     backgroundColor: '#499D32',
   };
+  const [token, setToken] = useState();
+  const getToken = async () => {
+    const accessToken = await SecureStore.getItemAsync('access_token');
+    setToken(accessToken);
+  };
+  useEffect(() => {
+    getToken();
+  }, []);
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.box, boxColor]}>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: `${PLANT_PREDICTIONS_ORIGIN}/photos/${photoUrl}` }}
+          source={{
+            uri: `${GATEWAY_ORIGIN}/photos/${photoUrl}`,
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Host: INTERCEPTOR_HOST,
+            },
+          }}
           style={styles.image}
         />
       </View>

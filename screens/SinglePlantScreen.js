@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
@@ -7,12 +7,43 @@ import * as Constants from '../constants';
 import GoBackIcon from '../components/icons/GoBackIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import StatusBarCustom from '../components/StatusBarCustom';
-import { PLANT_PREDICTIONS_ORIGIN } from '@env';
+import { getPlantOverview } from '../api/PlantInfoAPI';
+import { GATEWAY_ORIGIN, INTERCEPTOR_HOST } from '@env';
+import * as SecureStore from 'expo-secure-store';
 
 const SinglePlantScreen = (props) => {
   const { route, navigation } = props;
+  const [overViewData, setoverViewData] = useState();
+  const [token, setToken] = useState();
   console.log('route :>> ', route);
   console.log('navigation :>> ', navigation);
+  const getOverview = async () => {
+    try {
+      const response = await getPlantOverview(route.params.plantName);
+      setoverViewData(response.data);
+    } catch (error) {
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+    }
+  };
+  const getToken = async () => {
+    const accessToken = await SecureStore.getItemAsync('access_token');
+    setToken(accessToken);
+  };
+  useEffect(() => {
+    getToken();
+    getOverview();
+  }, []);
   return (
     <View style={styles.container}>
       <StatusBarCustom bgColor={Colors.green} barStyle="light" />
@@ -35,12 +66,13 @@ const SinglePlantScreen = (props) => {
             <Image
               style={styles.image}
               source={{
-                uri: `${PLANT_PREDICTIONS_ORIGIN}/photos/${route.params.photoUrl}`,
+                uri: `${GATEWAY_ORIGIN}/photos/${route.params.photoUrl}`,
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  Host: INTERCEPTOR_HOST,
+                },
               }}
             />
-            {console.log(
-              `${PLANT_PREDICTIONS_ORIGIN}/photos/${route.params.photoUrl}`,
-            )}
           </View>
 
           <View style={styles.detailsTextContainer}>
@@ -61,25 +93,23 @@ const SinglePlantScreen = (props) => {
         <Text style={styles.overviewText}>OVERVIEW</Text>
         <View style={styles.iconsContainer}>
           <View style={styles.rowIconContainer}>
-            <FlatList
-              data={[Constants.ICON_NAMES.SUN, Constants.ICON_NAMES.RAIN_DROP]}
-              keyExtractor={(item) => item}
-              renderItem={({ item }) => (
-                <OverviewItem iconName={item} iconStatus="JACEK " />
-              )}
-              contentContainerStyle={styles.rowIconContainer}
-              scrollEnabled={false}
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.SUN}
+              iconStatus={overViewData?.sun || 'No data'}
+            />
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.RAIN_DROP}
+              iconStatus={overViewData?.water || 'No data'}
             />
           </View>
-          <View style={styles.rowIconContainer}>
-            <FlatList
-              data={[Constants.ICON_NAMES.POT, Constants.ICON_NAMES.FERTALIZER]}
-              keyExtractor={(item) => item}
-              renderItem={({ item }) => (
-                <OverviewItem iconName={item} iconStatus="FILIP" />
-              )}
-              contentContainerStyle={styles.rowIconContainer}
-              scrollEnabled={false}
+          <View style={styles.rowIconContainer2}>
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.POT}
+              iconStatus={overViewData?.potSize || 'No data'}
+            />
+            <OverviewItem
+              iconName={Constants.ICON_NAMES.FERTALIZER}
+              iconStatus={overViewData?.fertalizer || 'No data'}
             />
           </View>
         </View>
@@ -106,14 +136,14 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingLeft: 10,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   textStyle: {
     fontSize: 60,
     color: Colors.white,
     fontFamily: 'Staatliches',
-    paddingLeft: 15,
+    // paddingLeft: 20,
   },
   photoAndButtonContainer: {
     alignItems: 'center',
@@ -170,7 +200,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 10,
+    marginLeft: 50,
+  },
+  rowIconContainer2: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 50,
+    marginBottom: 25,
   },
 });
 
