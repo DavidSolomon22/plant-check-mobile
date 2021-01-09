@@ -16,7 +16,7 @@ export const createPlantPrediction = async (
 
     console.log('CREATE_PLANT_PREDICTION_access_token', access_token);
 
-    return await FileSystem.uploadAsync(url, plantPhotoLocalUri, {
+    return FileSystem.uploadAsync(url, plantPhotoLocalUri, {
       headers: {
         Authorization: `Bearer ${access_token}`,
         Host: INTERCEPTOR_HOST,

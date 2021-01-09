@@ -39,6 +39,15 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
       predictedPlantName,
     );
 
+    if (response.status !== 401) {
+      navigation.navigate('SinglePlantScreen', {
+        plantName: predictedPlantName,
+        photoUrl: JSON.parse(response.body).photoPath,
+        goBackAsResetStack: true,
+      });
+      setLoading(false);
+    }
+
     console.log('RESPONSE from posting prediction', response);
 
     if (response.status === 401) {
@@ -69,7 +78,15 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
           plantPhotoLocalUri,
           predictedPlantName,
         );
+
         console.log('TOKEN refreshed WHILE POSTING PREDICTION', newResponse);
+
+        navigation.navigate('SinglePlantScreen', {
+          plantName: predictedPlantName,
+          photoUrl: JSON.parse(newResponse.body).photoPath,
+          goBackAsResetStack: true,
+        });
+        setLoading(false);
       } catch (error) {
         console.log('TOKEN too old WHILE POSTING PREDICTION', error.response);
         await SecureStore.deleteItemAsync('access_token');
@@ -78,13 +95,6 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
         signOut();
       }
     }
-
-    navigation.navigate('SinglePlantScreen', {
-      plantName: predictedPlantName,
-      photoUrl: JSON.parse(response.body).photoPath,
-      goBackAsResetStack: true,
-    });
-    setLoading(false);
   };
 
   const loadNeuralNetwork = async () => {
