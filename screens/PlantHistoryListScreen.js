@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,16 +15,31 @@ import * as Constants from '../constants';
 import { getUserPlantPredictions } from '../api//PlantPredictionAPI';
 import Moment from 'moment';
 
+function useIsMountedRef() {
+  const isMountedRef = useRef(null);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => (isMountedRef.current = false);
+  }, []);
+  return isMountedRef;
+}
+
 const PlantHistoryListScreen = ({ navigation }) => {
   const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+
+  const isMounted = useIsMountedRef();
+
   const getPredictions = async () => {
     try {
       setLoading(true);
       const response = await getUserPlantPredictions();
-      setDataSource(response.data.predictions);
-      setLoading(false);
+
+      if (isMounted) {
+        setDataSource(response.data.predictions);
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       setDataSource(null);

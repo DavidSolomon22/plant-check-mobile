@@ -3,6 +3,7 @@ import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { axiosInstance } from '../utilities/Interceptors';
+import { INTERCEPTOR_HOST } from '@env';
 
 export const createPlantPrediction = async (
   plantPhotoLocalUri,
@@ -11,8 +12,15 @@ export const createPlantPrediction = async (
   try {
     const userId = await SecureStore.getItemAsync('userId');
     const url = `${GATEWAY_ORIGIN}/users/${userId}/plants-predictions`;
-    console.log('PLANTY URL', url);
+    const access_token = await SecureStore.getItemAsync('access_token');
+
+    console.log('CREATE_PLANT_PREDICTION_access_token', access_token);
+
     return await FileSystem.uploadAsync(url, plantPhotoLocalUri, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        Host: INTERCEPTOR_HOST,
+      },
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       fieldName: 'plantPhoto',
       parameters: {

@@ -13,9 +13,11 @@ import TakePhotoScreen from '../screens/TakePhotoScreen';
 import DisplayTakenPhotoScreen from '../screens/DisplayTakenPhotoScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import LoginRegisterScreen from '../screens/LoginRegisterScreen';
-import * as SecureStore from 'expo-secure-store';
 import { ImageBackground } from 'react-native';
-import { AuthContext } from '../utilities/AuthUtilities';
+import {
+  AuthContext,
+  retrieveTokenOnAppStart,
+} from '../utilities/AuthUtilities';
 import { signIn, signOut, signUp } from '../utilities/AuthUtilities';
 import {
   requestInterceptor,
@@ -157,9 +159,9 @@ const LoginRegisterNavigator = () => {
 };
 
 const initialLoginState = {
-  isLoading: true,
   userName: null,
   userToken: null,
+  isLoading: true,
 };
 const loginReducer = (prevState, action) => {
   switch (action.type) {
@@ -214,15 +216,7 @@ const Navigation = () => {
   );
 
   useEffect(() => {
-    setTimeout(async () => {
-      let userToken;
-      userToken = null;
-      try {
-        userToken = await SecureStore.getItemAsync('access_token');
-
-        dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
-      } catch (error) {}
-    }, 1000);
+    retrieveTokenOnAppStart(dispatch);
   }, []);
 
   useEffect(() => {

@@ -1,21 +1,21 @@
+import { useContext } from 'react';
 import axios from 'axios';
 import { GATEWAY_ORIGIN, INTERCEPTOR_HOST } from '@env';
 import * as SecureStore from 'expo-secure-store';
 import { refreshToken } from '../api/AuthAPI';
+import { AuthContext } from '../utilities/AuthUtilities';
 
 export const axiosInstance = axios.create({ baseURL: GATEWAY_ORIGIN });
 
 export const requestInterceptor = () => {
   axiosInstance.interceptors.request.use(async (request) => {
     const accessToken = await SecureStore.getItemAsync('access_token');
-    // console.log('accessToken', accessToken);
     request.headers = {
       Authorization: `Bearer ${accessToken}`,
       Host: INTERCEPTOR_HOST,
     };
 
-    // console.log('AXIOS INTERCEPTROR REQUEST headers', request.headers);
-    // console.log('AXIOS INTERCEPTROR REQUEST', request);
+    console.log('AXIOS INTERCEPTOR REQUEST');
 
     return request;
   });

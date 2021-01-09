@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { loginUser, registerUser } from '../api/AuthAPI';
+import { loginUser, registerUser, refreshToken } from '../api/AuthAPI';
 import * as SecureStore from 'expo-secure-store';
 import Toast from 'react-native-toast-message';
 
@@ -86,4 +86,30 @@ export const signUp = async (
     console.log(error.response.status);
     console.log(error.response.headers);
   }
+};
+
+export const retrieveTokenOnAppStart = (dispatch) => {
+  setTimeout(async () => {
+    let userAccessToken;
+    let userRefreshToken;
+    userAccessToken = null;
+    userRefreshToken = null;
+    try {
+      userAccessToken = await SecureStore.getItemAsync('access_token');
+      userRefreshToken = await SecureStore.getItemAsync('refresh_token');
+
+      const response = await refreshToken(userAccessToken, userRefreshToken);
+      console.log('TOKEN REFRESH RESPONSE ON APP START, ', response);
+
+      // console.log('USER TOKEN FROM NAV: ', userAccessToken);
+
+      dispatch({ type: 'RETRIEVE_TOKEN', token: userAccessToken });
+    } catch (error) {
+      console.log('retrieveTokenOnAppStart: token is too old ');
+      await SecureStore.deleteItemAsync('access_token');
+      await SecureStore.deleteItemAsync('refresh_token');
+      await SecureStore.deleteItemAsync('userId');
+      dispatch({ type: 'LOGOUT' });
+    }
+  }, 1000);
 };

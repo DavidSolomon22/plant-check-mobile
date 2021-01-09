@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import stylesGlobal from '../styles/style';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import { bundleResourceIO } from '@tensorflow/tfjs-react-native';
 import * as jpeg from 'jpeg-js';
@@ -15,8 +15,13 @@ import * as FileSystem from 'expo-file-system';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as Constants from '../constants';
 import { createPlantPrediction } from '../api/PlantPredictionAPI';
+import * as SecureStore from 'expo-secure-store';
+import { refreshToken } from '../api/AuthAPI';
+import { AuthContext } from '../utilities/AuthUtilities';
 
 const DisplayTakenPhotoScreen = ({ route, navigation }) => {
+  const { signOut } = useContext(AuthContext);
+
   const [isTfReady, setTfReady] = useState(false);
   const [model, setModel] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,6 +38,47 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
       plantPhotoLocalUri,
       predictedPlantName,
     );
+
+    console.log('RESPONSE from posting prediction', response);
+
+    if (response.status === 401) {
+      try {
+        const access_token = await SecureStore.getItemAsync('access_token');
+        const refresh_token = await SecureStore.getItemAsync('refresh_token');
+
+        const responseFromRefresh = await refreshToken(
+          access_token,
+          refresh_token,
+        );
+        console.log(
+          'TOKEN REFRESH WHILE POSTING PREDICTION, ',
+          responseFromRefresh,
+        );
+
+        await SecureStore.deleteItemAsync('access_token');
+        await SecureStore.deleteItemAsync('refresh_token');
+        await SecureStore.setItemAsync(
+          'access_token',
+          responseFromRefresh.data.access_token,
+        );
+        await SecureStore.setItemAsync(
+          'refresh_token',
+          responseFromRefresh.data.refresh_token,
+        );
+        const newResponse = await createPlantPrediction(
+          plantPhotoLocalUri,
+          predictedPlantName,
+        );
+        console.log('TOKEN refreshed WHILE POSTING PREDICTION', newResponse);
+      } catch (error) {
+        console.log('TOKEN too old WHILE POSTING PREDICTION', error.response);
+        await SecureStore.deleteItemAsync('access_token');
+        await SecureStore.deleteItemAsync('refresh_token');
+        await SecureStore.deleteItemAsync('userId');
+        signOut();
+      }
+    }
+
     navigation.navigate('SinglePlantScreen', {
       plantName: predictedPlantName,
       photoUrl: JSON.parse(response.body).photoPath,
