@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,9 +11,44 @@ import {
 import stylesGlobal from '../styles/style';
 import { Colors } from '../styles';
 import * as Constants from '../constants';
+import { getPlantDetails } from '../api/PlantInfoAPI';
+import { GATEWAY_ORIGIN, INTERCEPTOR_HOST } from '@env';
+import * as SecureStore from 'expo-secure-store';
 
 const DetailsScreen = (props) => {
   const { route } = props;
+  const [detailsData, setDetailsData] = useState();
+  const [token, setToken] = useState();
+  const getDetails = async () => {
+    try {
+      const response = await getPlantDetails(route.params.plantName);
+      console.log(response.data);
+      setDetailsData(response.data);
+    } catch (error) {
+      if (error.response) {
+        // Request made and server responded
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+      }
+    }
+  };
+
+  const getToken = async () => {
+    const accessToken = await SecureStore.getItemAsync('access_token');
+    setToken(accessToken);
+  };
+
+  useEffect(() => {
+    getToken();
+    getDetails();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -26,34 +61,42 @@ const DetailsScreen = (props) => {
           <View style={[styles.firstContainer, stylesGlobal.androidSafeArea]}>
             <View style={styles.textContainer}>
               <Text style={styles.textTitle}>SUN EXPOSURE</Text>
-              <Text style={styles.text}>
-                {Constants.PLANT_DESCRIPTION.SUN_EXPOSURE}
-              </Text>
+              <Text style={styles.text}>{detailsData?.sun || 'No data'}</Text>
             </View>
             <View style={styles.imageContainer}>
-              <Image
-                source={{
-                  uri:
-                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
-                }}
-                style={styles.image}
-              />
+              {detailsData?.photoPaths?.length > 0 ? (
+                <Image
+                  source={{
+                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[0]}`,
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      Host: INTERCEPTOR_HOST,
+                    },
+                  }}
+                  style={styles.image}
+                />
+              ) : null}
             </View>
           </View>
           <View style={[styles.secondContainer, stylesGlobal.androidSafeArea]}>
             <View style={styles.imageContainer}>
-              <Image
-                source={{
-                  uri:
-                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
-                }}
-                style={styles.imageReverse}
-              />
+              {detailsData?.photoPaths?.length > 0 ? (
+                <Image
+                  source={{
+                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[1]}`,
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      Host: INTERCEPTOR_HOST,
+                    },
+                  }}
+                  style={styles.imageReverse}
+                />
+              ) : null}
             </View>
             <View style={styles.textContainer}>
               <Text style={styles.textTitleReverse}>WATER</Text>
               <Text style={styles.textReverse}>
-                {Constants.PLANT_DESCRIPTION.SUN_EXPOSURE}
+                {detailsData?.water || 'No data'}
               </Text>
             </View>
           </View>
@@ -63,33 +106,43 @@ const DetailsScreen = (props) => {
             <View style={styles.textContainer}>
               <Text style={styles.textTitle}>FERTALIZER</Text>
               <Text style={styles.text}>
-                {Constants.PLANT_DESCRIPTION.FERTALIZER}
+                {detailsData?.fertalizer || 'No data'}
               </Text>
             </View>
             <View style={styles.imageContainer}>
-              <Image
-                source={{
-                  uri:
-                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
-                }}
-                style={styles.image}
-              />
+              {detailsData?.photoPaths?.length > 0 ? (
+                <Image
+                  source={{
+                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[0]}`,
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      Host: INTERCEPTOR_HOST,
+                    },
+                  }}
+                  style={styles.image}
+                />
+              ) : null}
             </View>
           </View>
           <View style={[styles.secondContainer, stylesGlobal.androidSafeArea]}>
             <View style={styles.imageContainer}>
-              <Image
-                source={{
-                  uri:
-                    'https://www.juneflowers.ae/pub/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/c/a/cactus_plant.png',
-                }}
-                style={styles.imageReverse}
-              />
+              {detailsData?.photoPaths?.length > 0 ? (
+                <Image
+                  source={{
+                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[0]}`,
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                      Host: INTERCEPTOR_HOST,
+                    },
+                  }}
+                  style={styles.imageReverse}
+                />
+              ) : null}
             </View>
             <View style={styles.textContainer}>
               <Text style={styles.textTitleReverse}>POT SIZE</Text>
               <Text style={styles.textReverse}>
-                {Constants.PLANT_DESCRIPTION.POT_SIZE}
+                {detailsData?.potSize || 'No data'}
               </Text>
             </View>
           </View>
@@ -125,22 +178,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   firstContainer: {
-    flex: 5,
+    height: '40%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     marginBottom: '8%',
   },
   secondContainer: {
-    flex: 5,
+    height: '40%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    marginBottom: Platform.OS === 'ios' ? '15%' : '10%',
+    marginBottom: Platform.OS === 'ios' ? '30%' : '30%',
   },
   textContainer: {
     width: '40%',
-    height: '100%',
+    height: '60%',
     padding: 1,
   },
   text: {

@@ -7,13 +7,14 @@ import * as Constants from '../constants';
 import GoBackIcon from '../components/icons/GoBackIcon';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import StatusBarCustom from '../components/StatusBarCustom';
-import { PLANT_PREDICTIONS_ORIGIN } from '@env';
 import { getPlantOverview } from '../api/PlantInfoAPI';
-import { set } from 'react-native-reanimated';
+import { GATEWAY_ORIGIN, INTERCEPTOR_HOST } from '@env';
+import * as SecureStore from 'expo-secure-store';
 
 const SinglePlantScreen = (props) => {
   const { route, navigation } = props;
   const [overViewData, setoverViewData] = useState();
+  const [token, setToken] = useState();
   console.log('route :>> ', route);
   console.log('navigation :>> ', navigation);
   const getOverview = async () => {
@@ -35,7 +36,12 @@ const SinglePlantScreen = (props) => {
       }
     }
   };
+  const getToken = async () => {
+    const accessToken = await SecureStore.getItemAsync('access_token');
+    setToken(accessToken);
+  };
   useEffect(() => {
+    getToken();
     getOverview();
   }, []);
   return (
@@ -60,12 +66,13 @@ const SinglePlantScreen = (props) => {
             <Image
               style={styles.image}
               source={{
-                uri: `${PLANT_PREDICTIONS_ORIGIN}/photos/${route.params.photoUrl}`,
+                uri: `${GATEWAY_ORIGIN}/photos/${route.params.photoUrl}`,
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  Host: INTERCEPTOR_HOST,
+                },
               }}
             />
-            {console.log(
-              `${PLANT_PREDICTIONS_ORIGIN}/photos/${route.params.photoUrl}`,
-            )}
           </View>
 
           <View style={styles.detailsTextContainer}>
@@ -86,15 +93,6 @@ const SinglePlantScreen = (props) => {
         <Text style={styles.overviewText}>OVERVIEW</Text>
         <View style={styles.iconsContainer}>
           <View style={styles.rowIconContainer}>
-            {/* <FlatList
-              data={[overViewData.sun, overViewData.water]}
-              keyExtractor={(item) => item}
-              renderItem={({ item }) => (
-                <OverviewItem iconName={item} iconStatus={item} />
-              )}
-              contentContainerStyle={styles.rowIconContainer}
-              scrollEnabled={false}
-            /> */}
             <OverviewItem
               iconName={Constants.ICON_NAMES.SUN}
               iconStatus={overViewData?.sun || 'No data'}
@@ -104,16 +102,7 @@ const SinglePlantScreen = (props) => {
               iconStatus={overViewData?.water || 'No data'}
             />
           </View>
-          <View style={styles.rowIconContainer}>
-            {/* <FlatList
-              data={[Constants.ICON_NAMES.POT, Constants.ICON_NAMES.FERTALIZER]}
-              keyExtractor={(item) => item}
-              renderItem={({ item }) => (
-                <OverviewItem iconName={item} iconStatus="IRRIGATING " />
-              )}
-              contentContainerStyle={styles.rowIconContainer}
-              scrollEnabled={false}
-            /> */}
+          <View style={styles.rowIconContainer2}>
             <OverviewItem
               iconName={Constants.ICON_NAMES.POT}
               iconStatus={overViewData?.potSize || 'No data'}
@@ -147,14 +136,14 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingLeft: 10,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   textStyle: {
     fontSize: 60,
     color: Colors.white,
     fontFamily: 'Staatliches',
-    paddingLeft: 15,
+    // paddingLeft: 20,
   },
   photoAndButtonContainer: {
     alignItems: 'center',
@@ -212,6 +201,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 50,
+  },
+  rowIconContainer2: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 50,
+    marginBottom: 25,
   },
 });
 
