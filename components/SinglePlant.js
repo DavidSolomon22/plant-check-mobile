@@ -26,16 +26,18 @@ const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.box, boxColor]}>
       <View style={styles.imageContainer}>
-        <Image
-          source={{
-            uri: `${GATEWAY_ORIGIN}/photos/${photoUrl}`,
-            headers: {
-              Authorization: `Bearer ${token}`,
-              Host: INTERCEPTOR_HOST,
-            },
-          }}
-          style={styles.image}
-        />
+        {photoUrl && token && (
+          <Image
+            source={{
+              uri: `${GATEWAY_ORIGIN}/photos/${photoUrl}`,
+              headers: {
+                Authorization: `Bearer ${token}`,
+                Host: INTERCEPTOR_HOST,
+              },
+            }}
+            style={styles.image}
+          />
+        )}
       </View>
       <View>
         <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>

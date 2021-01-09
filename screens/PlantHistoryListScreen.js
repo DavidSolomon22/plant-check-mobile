@@ -57,6 +57,7 @@ const PlantHistoryListScreen = ({ navigation }) => {
       }
     }
   };
+
   const onRefresh = async () => {
     setRefreshing(true);
     getPredictions();
@@ -66,6 +67,7 @@ const PlantHistoryListScreen = ({ navigation }) => {
   useEffect(() => {
     getPredictions();
   }, []);
+
   return (
     <View
       style={[
