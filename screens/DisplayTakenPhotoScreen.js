@@ -125,7 +125,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const convertImage = async () => {
     const uriResize = await ImageManipulator.manipulateAsync(
       route.params.picture.uri,
-      [{ resize: { width: 180, height: 180 } }],
+      [{ resize: { width: 150, height: 150 } }],
       { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
     );
     const imgB64 = await FileSystem.readAsStringAsync(uriResize.uri, {
@@ -153,6 +153,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   };
 
   const getPlantName = (prediction) => {
+    console.log('prediction :>> ', prediction);
     let plantName = Array.from(prediction)
       .map((p, i) => ({
         probability: p,

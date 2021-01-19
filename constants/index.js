@@ -1,9 +1,12 @@
 export const PLANT_CLASS_NAMES = [
-  'daisy',
-  'dandelion',
-  'roses',
-  'sunflowers',
-  'tulips',
+  'aloe',
+  'cactus',
+  'fern',
+  'hydrangea',
+  'monstera',
+  'orchid',
+  'rose',
+  'tulip',
 ];
 
 export const PLANT_HISTORY_LIST = [
