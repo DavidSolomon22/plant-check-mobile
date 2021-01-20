@@ -98,14 +98,16 @@ export const retrieveTokenOnAppStart = (dispatch) => {
       userAccessToken = await SecureStore.getItemAsync('access_token');
       userRefreshToken = await SecureStore.getItemAsync('refresh_token');
 
+      if (userAccessToken === null && userRefreshToken === null) {
+        throw 'Tokens dont exist';
+      }
+
       const response = await refreshToken(userAccessToken, userRefreshToken);
       console.log('TOKEN REFRESH RESPONSE ON APP START, ', response);
 
-      // console.log('USER TOKEN FROM NAV: ', userAccessToken);
-
       dispatch({ type: 'RETRIEVE_TOKEN', token: userAccessToken });
     } catch (error) {
-      console.log('retrieveTokenOnAppStart: token is too old ');
+      console.log('retrieveTokenOnAppStart: token is too old ', error);
       await SecureStore.deleteItemAsync('access_token');
       await SecureStore.deleteItemAsync('refresh_token');
       await SecureStore.deleteItemAsync('userId');
