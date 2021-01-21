@@ -1,8 +1,10 @@
 export const PLANT_CLASS_NAMES = [
   'aloe',
   'cactus',
+  'christmas-tree',
   'fern',
   'hydrangea',
+  'mint',
   'monstera',
   'orchid',
   'rose',
