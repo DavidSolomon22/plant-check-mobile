@@ -102,15 +102,30 @@ export const retrieveTokenOnAppStart = (dispatch) => {
         throw 'Tokens dont exist';
       }
 
+      await SecureStore.deleteItemAsync('access_token');
+      await SecureStore.deleteItemAsync('refresh_token');
+
       const response = await refreshToken(userAccessToken, userRefreshToken);
       console.log('TOKEN REFRESH RESPONSE ON APP START, ', response);
+
+      await SecureStore.setItemAsync(
+        'access_token',
+        response.data.access_token,
+      );
+      await SecureStore.setItemAsync(
+        'refresh_token',
+        response.data.refresh_token,
+      );
 
       dispatch({ type: 'RETRIEVE_TOKEN', token: userAccessToken });
     } catch (error) {
       console.log('retrieveTokenOnAppStart: token is too old ', error);
-      await SecureStore.deleteItemAsync('access_token');
-      await SecureStore.deleteItemAsync('refresh_token');
-      await SecureStore.deleteItemAsync('userId');
+      if (error !== 'Tokens dont exist') {
+        await SecureStore.deleteItemAsync('access_token');
+        await SecureStore.deleteItemAsync('refresh_token');
+        await SecureStore.deleteItemAsync('userId');
+      }
+
       dispatch({ type: 'LOGOUT' });
     }
   }, 1000);
