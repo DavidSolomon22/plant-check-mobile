@@ -125,7 +125,7 @@ const DisplayTakenPhotoScreen = ({ route, navigation }) => {
   const convertImage = async () => {
     const uriResize = await ImageManipulator.manipulateAsync(
       route.params.picture.uri,
-      [{ resize: { width: 150, height: 150 } }],
+      [{ resize: { width: 224, height: 224 } }],
       { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG },
     );
     const imgB64 = await FileSystem.readAsStringAsync(uriResize.uri, {
