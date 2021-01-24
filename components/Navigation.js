@@ -80,10 +80,6 @@ const UserProfileStackScreen = () => {
         name="UserProfileScreen"
         component={UserProfileScreen}
       />
-      <UserProfileStack.Screen
-        name="LoginRegisterScreen"
-        component={LoginRegisterScreen}
-      />
     </UserProfileStack.Navigator>
   );
 };

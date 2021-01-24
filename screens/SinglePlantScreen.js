@@ -58,7 +58,9 @@ const SinglePlantScreen = (props) => {
           >
             <GoBackIcon />
           </TouchableOpacity>
-          <Text style={styles.textStyle}>{route.params.plantName}</Text>
+          <View style={styles.plantNameContainer}>
+            <Text style={styles.textStyle}>{route.params.plantName}</Text>
+          </View>
         </View>
 
         <View style={styles.photoAndButtonContainer}>
@@ -136,14 +138,17 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingLeft: 10,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   textStyle: {
     fontSize: 60,
     color: Colors.white,
     fontFamily: 'Staatliches',
-    // paddingLeft: 20,
+    marginRight: '10%',
+  },
+  plantNameContainer: {
+    width: '99%',
+    alignItems: 'center',
   },
   photoAndButtonContainer: {
     alignItems: 'center',
@@ -171,8 +176,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '73%',
-    height: '8%',
+    width: '60%',
+    // height: '8%',
     borderRadius: 30,
     marginTop: 20,
     shadowColor: '#000',
@@ -182,6 +187,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   detailsText: {
+    // backgroundColor: 'grey',
     fontFamily: 'Staatliches',
     fontSize: 23,
     color: Colors.black,

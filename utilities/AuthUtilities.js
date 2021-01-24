@@ -37,9 +37,9 @@ export const signIn = async (userName, password, dispatch) => {
       topOffset: 50,
     });
     console.log('my error', error);
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
+    console.log(error.response);
+    // console.log(error.response.status);
+    // console.log(error.response.headers);
   }
 };
 

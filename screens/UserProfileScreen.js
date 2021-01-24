@@ -11,9 +11,9 @@ const UserProfileScreen = ({ navigation }) => {
   const { signOut } = useContext(AuthContext);
 
   return (
-    <View style={[{ flex: 1 }, { justifyContent: 'center' }]}>
-      <TouchableOpacity onPress={signOut}>
-        <Text>Wyloguj sie</Text>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={signOut} style={styles.textContainer}>
+        <Text style={styles.logOutText}>Prees here to log out</Text>
       </TouchableOpacity>
     </View>
   );
@@ -24,8 +24,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
-  image: {},
+  textContainer: {
+    alignItems: 'center',
+  },
+  logOutText: {
+    fontFamily: 'Staatliches',
+    fontSize: 40,
+  },
 });
 
 export default UserProfileScreen;
