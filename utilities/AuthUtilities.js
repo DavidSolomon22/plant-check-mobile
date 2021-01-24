@@ -22,6 +22,7 @@ export const signIn = async (userName, password, dispatch) => {
         response.data.refresh_token,
       );
       await SecureStore.setItemAsync('userId', response.data.userId);
+      await SecureStore.setItemAsync('username', userName);
       dispatch({
         type: 'LOGIN',
         id: userName,

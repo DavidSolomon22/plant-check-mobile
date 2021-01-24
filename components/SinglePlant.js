@@ -39,11 +39,11 @@ const SinglePlant = ({ plantName, date, photoUrl, handlePress }) => {
           />
         )}
       </View>
-      <View>
-        <Text style={[styles.text, stylesGlobal.font]}>{plantName}</Text>
+      <View style={[{ justifyContent: 'center', alignItems: 'center' }]}>
+        <Text style={styles.text}>{plantName}</Text>
         <Text style={styles.date}>{date}</Text>
         <View style={styles.infoContainer} onPress={handlePress}>
-          <Text style={styles.info}>ADD TO YOUR PLANT'S HOME</Text>
+          {/* <Text style={styles.info}>ADD TO YOUR PLANT'S HOME</Text> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -85,17 +85,18 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     fontSize: 35,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'Staatliches',
   },
   date: {
-    fontSize: 14,
+    fontSize: 17,
     textAlign: 'center',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     fontFamily: 'Staatliches',
   },
   infoContainer: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',`
     borderRadius: 30,
     marginTop: '15%',
     width: 200,

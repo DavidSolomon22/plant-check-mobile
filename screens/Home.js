@@ -3,11 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PhotoButton from '../components/icons/PhotoButton';
 import Leaf from '../components/icons/Leaf';
 import StatusBarCustom from '../components/StatusBarCustom';
+import { Colors } from '../styles';
 
 const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <StatusBarCustom />
+      <StatusBarCustom bgColor={Colors.white} barStyle="dark-content" />
       <TouchableOpacity onPress={() => navigation.navigate('TakePhotoScreen')}>
         <PhotoButton />
       </TouchableOpacity>

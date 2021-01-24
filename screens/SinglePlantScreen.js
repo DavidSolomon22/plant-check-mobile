@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textStyle: {
-    fontSize: 60,
+    fontSize: 56,
     color: Colors.white,
     fontFamily: 'Staatliches',
     marginRight: '10%',

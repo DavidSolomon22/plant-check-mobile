@@ -94,7 +94,7 @@ const LoginRegisterForm = ({ isItLogin, redirectToLoginRegister }) => {
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
                 value={values.email}
-                placeholder="email"
+                placeholder="EMAIL"
               />
             </View>
             <Text style={styles.errorText}>
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
     width: '70%',
     marginLeft: '3%',
+    fontWeight: 'bold',
   },
   errorText: {
     fontFamily: 'Staatliches',
