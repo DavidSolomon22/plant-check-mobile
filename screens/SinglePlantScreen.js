@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   plantNameAndGoBackArrowContainer: {
-    marginTop: 25,
     paddingLeft: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -149,11 +148,12 @@ const styles = StyleSheet.create({
   plantNameContainer: {
     width: '99%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   photoAndButtonContainer: {
     alignItems: 'center',
     height: '73%',
-    paddingTop: 10,
+    marginTop: 25,
   },
   imageContainer: {
     height: '80%',
