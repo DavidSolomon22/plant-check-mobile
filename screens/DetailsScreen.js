@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     width: '40%',
-    height: '60%',
+    height: '100%',
     padding: 1,
   },
   text: {
