@@ -113,7 +113,7 @@ const DetailsScreen = (props) => {
               {detailsData?.photoPaths?.length > 0 ? (
                 <Image
                   source={{
-                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[0]}`,
+                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[2]}`,
                     headers: {
                       Authorization: `Bearer ${token}`,
                       Host: INTERCEPTOR_HOST,
@@ -129,7 +129,7 @@ const DetailsScreen = (props) => {
               {detailsData?.photoPaths?.length > 0 ? (
                 <Image
                   source={{
-                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[0]}`,
+                    uri: `${GATEWAY_ORIGIN}/plant-infos/${route.params.plantName}/photos/${detailsData?.photoPaths[3]}`,
                     headers: {
                       Authorization: `Bearer ${token}`,
                       Host: INTERCEPTOR_HOST,

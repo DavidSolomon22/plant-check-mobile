@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   },
   iconsContainer: {
     flex: 1,
+    paddingRight: 30,
   },
   rowIconContainer: {
     flex: 1,
